@@ -1,0 +1,106 @@
+/* Base Styles */
+body {
+    font-family: 'League Spartan', sans-serif;
+    color: #fff;
+    background-color: #121212; /* Dark background for contrast */
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e1e; /* Dark gray for navbar */
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar .logo {
+    color: #9b59b6; /* Purple */
+    font-size: 1.5rem;
+    font-weight: 700; /* Bold */
+  }
+  
+  .navbar .menu {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar .menu-item {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .navbar .menu-item:hover {
+    color: #9b59b6; /* Purple on hover */
+  }
+  
+  /* Button Styles */
+  .button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #9b59b6; /* Purple */
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #8e44ad; /* Darker purple */
+  }
+  
+  /* Profile Menu */
+  .profile-menu {
+    display: flex;
+    align-items: center;
+    background-color: #2c2c2c; /* Slightly lighter dark gray */
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .profile-menu:hover {
+    background-color: #1e1e1e; /* Darker background on hover */
+  }
+  
+  .profile-menu .menu-icon {
+    color: #9b59b6; /* Purple */
+    margin-right: 5px;
+  }
+  
+  /* Dropdown Menu */
+  .dropdown-menu {
+    position: absolute;
+    background-color: #1e1e1e; /* Dark gray */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 200px;
+  }
+  
+  .dropdown-menu .item {
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+  }
+  
+  .dropdown-menu .item:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-menu .item:hover {
+    background-color: #2c2c2c; /* Slightly lighter dark gray */
+  }
+  
+  .dropdown-menu .item .icon {
+    color: #9b59b6; /* Purple */
+    margin-right: 10px;
+  }
+  
