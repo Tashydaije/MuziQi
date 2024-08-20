@@ -1,0 +1,53 @@
+.button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Variants */
+  .primary {
+    background-color: #61dafb;
+    color: white;
+  }
+  
+  .primary:hover {
+    background-color: #21a1f1;
+  }
+  
+  .secondary {
+    background-color: #282c34;
+    color: white;
+  }
+  
+  .secondary:hover {
+    background-color: #1c1f24;
+  }
+  
+  .danger {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .danger:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Sizes */
+  .small {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  
+  .medium {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .large {
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+  
