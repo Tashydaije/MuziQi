@@ -29,4 +29,14 @@ const getPlaylists = async (userId) => {
   return playlists;
 };
 
-export { createPlaylist, getPlaylists };
+const addSongToPlaylist = async (playlistId, song) => {
+  const db = getDb();
+  const playlistCollection = await db.collection('playlists');
+  const result = await playlistCollection.updateOne(
+    { _id: new ObjectId(playlistId) },
+    { $push: { songs: song } }
+  );
+  return result.modifiedCount > 0;
+}
+
+export { createPlaylist, getPlaylists, addSongToPlaylist };

@@ -1,6 +1,7 @@
 import express from 'express';
 import Song from '../models/song.js';
 import { spotifyApi, authenticate, getTrack } from '../services/spotify.js';
+import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -51,7 +52,7 @@ router.post('/add', async (req, res) => {
   });
   
   // Search and add song
-router.post('/search', async (req, res) => {
+router.post('/search', protect,  async (req, res) => {
     try {
       const { query } = req.body; // Expecting a search query
   
