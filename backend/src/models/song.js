@@ -19,7 +19,13 @@ class Song {
 
     // Insert the new song into the collection
     const result = await songsCollection.insertOne(this);
-    return result.ops[0]; // Return the inserted document
+    console.log('logging result', result);
+    if (result && result.insertedId) {
+      const newSong = await songsCollection.findOne({ _id: result.insertedId, ...this });
+      return newSong;
+    } else {
+      throw new Error('song search and add failed');
+    }
   }
 
   // Static method to find a song by ID

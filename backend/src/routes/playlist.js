@@ -23,7 +23,7 @@ router.post('/', protect, async (req, res) => {
 router.get('/', protect, async (req, res) => {
     try {
       // Find all playlists that belong to the authenticated user
-      const playlists = await getPlaylists(req.user.id)
+      const playlists = await getPlaylists(req.user._id)
       
       console.log(playlists)
       // Return the playlists to the client
