@@ -65,7 +65,17 @@ router.post('/search', async (req, res) => {
   
       // Optionally, you can pick a track or let the user select one
       const track = tracks[0]; // Just an example, may want to refine this
-      console.log(track)
+      //console.log(track)
+      const spotifyUri = track.uri;
+      console.log('spotifyUri', spotifyUri);
+
+      // Check if the song already exists by Spotify URI
+      const existingSong = await Song.findBySpotifyUri(spotifyUri);
+      console.log('existing song', existingSong);
+      if (existingSong) {
+        return res.status(200).json({ msg: 'Song already exists in the database', song: existingSong });
+      }
+
       // Create and save the song
       const newSong = new Song({
         title: track.name,
