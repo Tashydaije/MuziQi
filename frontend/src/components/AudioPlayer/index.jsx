@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentSong } from "../../redux/audioPlayer";
-import Like from "../Like";
+import { setCurrentSong } from "../../redux/audioPlayerSlice";
+// import Like from "../Like";
 import { IconButton } from "@mui/material";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -12,7 +12,11 @@ import styles from "./styles.module.scss";
 const AudioPlayer = () => {
   const [trackProgress, setTrackProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const { currentSong } = useSelector((state) => state.audioPlayer);
+
+  // Check if current song has a value else initiate it as null
+  const { currentSong } = useSelector((state) =>
+    state ? state.audioPlayer : null
+  );
   const dispatch = useDispatch();
 
   const audioRef = useRef();
@@ -41,8 +45,9 @@ const AudioPlayer = () => {
     -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
   `;
 
+  //Since you're accessing an object, appending the null coalescing operator will help catch errors
   useEffect(() => {
-    if (currentSong.action === "play") {
+    if (currentSong?.action === "play") {
       audioRef.current.play();
       startTimer();
     } else {
@@ -57,7 +62,7 @@ const AudioPlayer = () => {
   };
 
   const handleActions = () => {
-    currentSong.action === "play"
+    currentSong?.action === "play"
       ? dispatch(setCurrentSong({ ...currentSong, action: "pause" }))
       : dispatch(setCurrentSong({ ...currentSong, action: "play" }));
   };
@@ -65,10 +70,10 @@ const AudioPlayer = () => {
   return (
     <div className={styles.audioPlayer}>
       <div className={styles.left}>
-        <img src={currentSong.song.img} alt="song_img" />
+        <img src={currentSong?.song.img} alt="song_img" />
         <div className={styles.songInfo}>
-          <p className={styles.songName}>{currentSong.song.name}</p>
-          <p className={styles.songArtist}>{currentSong.song.artist}</p>
+          <p className={styles.songName}>{currentSong?.song.name}</p>
+          <p className={styles.songArtist}>{currentSong?.song.artist}</p>
         </div>
       </div>
       <div className={styles.center}>
@@ -77,7 +82,7 @@ const AudioPlayer = () => {
             <SkipPreviousIcon />
           </IconButton>
           <IconButton className={styles.play} onClick={handleActions}>
-            {currentSong.action === "play" ? <PauseIcon /> : <PlayArrowIcon />}
+            {currentSong?.action === "play" ? <PauseIcon /> : <PlayArrowIcon />}
           </IconButton>
           <IconButton className={styles.next}>
             <SkipNextIcon />
@@ -95,12 +100,13 @@ const AudioPlayer = () => {
             className={styles.progress}
             style={{ background: trackStyling }}
           />
-          <audio src={currentSong.song.song} ref={audioRef}></audio>
+          <audio src={currentSong?.song.song} ref={audioRef}></audio>
           <p>{Math.floor(duration)}</p>
         </div>
       </div>
       <div className={styles.right}>
-        <Like songId={currentSong.song._id} />
+        {/* The component doesn't exist anywher. Did you create it? If not, create it before importing */}
+        {/* <Like songId={currentSong?.song._id} /> */}
       </div>
     </div>
   );
