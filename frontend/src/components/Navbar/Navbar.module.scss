@@ -8,10 +8,12 @@
     width: 100%;
     position: fixed;
     top: 0;
+    z-index: 1000;
   }
   
   .navButton, .menuButton, .profileButton {
     color: rgb(85, 169, 230);
+    margin: 0 8px;
   }
   
   .menuSection {
@@ -22,5 +24,6 @@
   .controlsSection {
     display: flex;
     align-items: center;
+    gap: 16px;
   }
   

@@ -1,19 +1,16 @@
-import React from 'react';
+import React , { useState } from 'react';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import { ArrowBack, ArrowForward, MoreVert, Home } from '@mui/icons-material';
+import { ArrowBack, ArrowForward, Home, Menu as MenuIcon} from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import styles from './Navbar.module.scss';
+import Sidebar from '../Sidebar'
 
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = React.useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   const handleProfileClick = (event) => {
@@ -38,20 +35,13 @@ const Navbar = () => {
   };
 
   return (
+    <>
     <nav className={styles.navbar}>
       <div className={styles.menuSection}>
-        <IconButton onClick={handleMenuClick} className={styles.navButton}>
-          <MoreVert />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={handleMenuClose}>Option 1</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Option 2</MenuItem>
-        </Menu>
-      </div>
+          <IconButton onClick={toggleSidebar} className={styles.navButton}>
+            <MenuIcon />
+          </IconButton>
+        </div>
       <div className={styles.controlsSection}>
         <IconButton onClick={handleHomeClick} className={styles.navButton}>
           <Home />
@@ -76,6 +66,8 @@ const Navbar = () => {
         </Menu>
       </div>
     </nav>
+    <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+    </>
   );
 };
 
