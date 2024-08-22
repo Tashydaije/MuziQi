@@ -1,16 +1,26 @@
 .navbar {
     display: flex;
-    justify-content: flex-end; /* Align items to the right */
-    padding: 10px 20px; /* Add some padding */
-    background-color: purple; /* Change navbar background to purple */
-    position: fixed; /* Make the navbar stay at the top */
-    width: 100%; /* Full width */
-    top: 0; /* Align to the top */
-    z-index: 1000; /* Make sure it's above other content */
+    justify-content: space-between;
+    align-items: center;
+    background-color: purple;
+    padding: 0 16px;
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    top: 0;
   }
   
-  .navButton {
-    color: black; /* Change button icon color to black */
+  .navButton, .menuButton, .profileButton {
+    color: rgb(85, 169, 230);
   }
   
+  .menuSection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .controlsSection {
+    display: flex;
+    align-items: center;
+  }
   
