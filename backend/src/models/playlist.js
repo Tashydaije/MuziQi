@@ -15,7 +15,6 @@ const createPlaylist = async (userId, name) => {
   if (result && result.insertedId) {
     // Fetch the newly created playlist by its ID
     const newPlaylist = await db.collection('playlists').findOne({ _id: result.insertedId });
-    console.log(newPlaylist)
     return newPlaylist;
   } else {
     throw new Error('Playlist creation failed');
@@ -26,11 +25,18 @@ const getPlaylists = async (userId) => {
   const db = getDb();
   // Convert userId to ObjectId if it's not already an ObjectId
   const userObjectId = new ObjectId(userId);
-
-  console.log('ObjectId', userObjectId)
   const playlists = await db.collection('playlists').find({ userId: userObjectId }).toArray();
-  console.log('Fetched playlists:', playlists);
   return playlists;
 };
 
-export { createPlaylist, getPlaylists };
+const addSongToPlaylist = async (playlistId, song) => {
+  const db = getDb();
+  const playlistCollection = await db.collection('playlists');
+  const result = await playlistCollection.updateOne(
+    { _id: new ObjectId(playlistId) },
+    { $push: { songs: song } }
+  );
+  return result.modifiedCount > 0;
+}
+
+export { createPlaylist, getPlaylists, addSongToPlaylist };

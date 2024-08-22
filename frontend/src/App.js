@@ -1,7 +1,8 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector to access Redux state
 import Home from './pages/Home';
-import AudioPlayer from './components/AudioPlayer/AudioPlayer';
+import NotFound from './pages/NotFound';
 
 function App() {
   // Access the currentSong state from Redux
@@ -12,6 +13,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <AudioPlayer />
         {currentSong && (
