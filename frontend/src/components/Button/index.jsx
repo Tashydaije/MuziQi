@@ -1,14 +1,11 @@
-import { CircularProgress } from "@mui/material";
-import styles from "./styles.module.scss";
+// src/components/Button/index.jsx
+import React from 'react';
+import styles from './styles.module.scss';
 
-const Button = ({ label, isFetching, ...rest }) => {
+const Button = ({ children, onClick }) => {
   return (
-    <button {...rest} className={styles.primaryBtn}>
-      {isFetching ? (
-        <CircularProgress size={25} style={{ color: "black" }} />
-      ) : (
-        label
-      )}
+    <button className={styles.button} onClick={onClick}>
+      {children}
     </button>
   );
 };
