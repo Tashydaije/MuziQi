@@ -1,0 +1,16 @@
+.navbar {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    padding: 10px 20px; /* Add some padding */
+    background-color: purple; /* Change navbar background to purple */
+    position: fixed; /* Make the navbar stay at the top */
+    width: 100%; /* Full width */
+    top: 0; /* Align to the top */
+    z-index: 1000; /* Make sure it's above other content */
+  }
+  
+  .navButton {
+    color: black; /* Change button icon color to black */
+  }
+  
+  
