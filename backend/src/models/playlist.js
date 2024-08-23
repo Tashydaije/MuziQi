@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { ObjectId } from 'mongodb';
+import { ObjectId, ReturnDocument } from 'mongodb';
 import getDb from '../config/db.js';
 
 const createPlaylist = async (userId, name) => {
@@ -46,4 +46,15 @@ const getPlaylistById = async (playlistId) => {
   return playlist;
 }
 
-export { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById };
+const updatePlaylistName = async (playlistId, newName, userId) => {
+  const db = getDb();
+  const playlistCollection = await db.collection('playlists');
+  const result = await playlistCollection.updateOne(
+    { _id: new ObjectId(playlistId), userId: new ObjectId(userId) },
+    { $set: { name: newName } }
+  );
+
+  return result.modifiedCount > 0;
+}
+
+export { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName };
