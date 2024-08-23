@@ -1,0 +1,34 @@
+.layout {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 3fr; /* Adjust as needed */
+  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-areas:
+    'navbar navbar navbar'
+    'sidebar newin newin'
+    'sidebar newin newin'
+    'sidebar for-you trending'
+    'sidebar for-you trending'
+    'song song song';
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.newIn {
+  grid-area: newin;
+}
+
+.for-you {
+  grid-area: for-you;
+}
+
+.trending {
+  grid-area: trending;
+}
+
+.song {
+  grid-area: song;
+}
