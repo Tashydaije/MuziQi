@@ -57,4 +57,15 @@ const updatePlaylistName = async (playlistId, newName, userId) => {
   return result.modifiedCount > 0;
 }
 
-export { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName };
+const deletePlaylistById = async (playlistId, userId) => {
+  const db = getDb();
+  const playlistCollection = await db.collection('playlists');
+  const result = await playlistCollection.deleteOne({
+    _id: new ObjectId(playlistId),
+    userId: new ObjectId(userId)
+  })
+
+  return result.deletedCount > 0;
+}
+
+export { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName, deletePlaylistById };
