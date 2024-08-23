@@ -33,6 +33,7 @@ class Song {
     const db = getDb();
     const songsCollection = db.collection('songs');
     const song = await songsCollection.findOne({ _id: new ObjectId(id) });
+    console.log("Song:", song);
     return song;
   }
 
