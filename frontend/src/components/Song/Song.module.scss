@@ -1,0 +1,89 @@
+.songContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(147, 88, 88); /* Dark background for better contrast */
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space out items horizontally */
+    z-index: 1000;
+  }
+  
+  .songDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start (left) */
+  }
+  
+  .songTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .songArtist {
+    font-size: 1rem;
+    color: #aaa;
+  }
+  
+  .controlsContainer {
+    display: flex;
+    flex-direction: column; /* Stack controls vertically */
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; /* Expand to take available space */
+    margin: 0 20px; /* Space around controls */
+  }
+  
+  .controlButtons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Space between controls and seek bar */
+  }
+  
+  .controlButton {
+    color: #fff; /* Button color */
+    margin: 0 5px; /* Spacing between buttons */
+  }
+  
+  .progressContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%; /* Full width to ensure proper centering */
+  }
+  
+  .songInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    width: 100%; /* Full width to ensure proper centering */
+  }
+  
+  .currentTime, .duration {
+    color: #fff;
+    margin: 0 10px;
+  }
+  
+  .progressBar {
+    width: 300px; /* Adjust to preferred width */
+    margin: 0 10px;
+  }
+  
+  .volumeControl {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align volume control to the right */
+  }
+  
+  .volumeIcon {
+    color: #fff; /* Icon color */
+    margin-right: 10px;
+  }
+  
+  .volumeSlider {
+    width: 100px; /* Adjust volume control width */
+  }
+  

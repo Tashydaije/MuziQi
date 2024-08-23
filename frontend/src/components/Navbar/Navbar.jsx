@@ -1,33 +1,10 @@
 import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { ArrowBack, ArrowForward, Home, Menu as MenuIcon } from '@mui/icons-material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { IconButton, Menu, MenuItem, InputBase } from '@mui/material';
+import { ArrowBack, ArrowForward, Search as SearchIcon, Home as HomeIcon } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import styles from './Navbar.module.scss';
-import Sidebar from '../Sidebar';
 
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [profileMenuEl, setProfileMenuEl] = useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileMenuClick = (event) => {
-    setProfileMenuEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setProfileMenuEl(null);
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   const handleProfileClick = (event) => {
     setProfileAnchorEl(event.currentTarget);
@@ -46,61 +23,49 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <nav className={styles.navbar}>
-        <IconButton onClick={handleBack} className={styles.navButton}>
+    <nav className="fixed top-0 w-full bg-red-700 flex items-center justify-between p-4 z-50 shadow-lg">
+      {/* Navigation Buttons */}
+      <div className="flex items-center">
+        <IconButton onClick={handleBack} className="text-white mx-2">
           <ArrowBack />
         </IconButton>
-        <IconButton onClick={handleForward} className={styles.navButton}>
+        <IconButton onClick={handleForward} className="text-white mx-2">
           <ArrowForward />
         </IconButton>
-
-        {/* Home Icon */}
-        <IconButton className={styles.homeButton}>
-          <Home />
+        <IconButton className="text-white mx-2">
+          <HomeIcon />
         </IconButton>
+      </div>
 
-        {/* Dropdown Menu */}
-        <IconButton onClick={handleMenuClick} className={styles.menuButton}>
-          <MoreVertIcon />
+      {/* Search Bar */}
+      <div className="flex items-center bg-white rounded-full px-4 py-1 ml-5 w-72">
+        <InputBase
+          placeholder="Type here..."
+          inputProps={{ 'aria-label': 'search' }}
+          className="flex-grow px-2 outline-none"
+        />
+        <IconButton type="submit" aria-label="search" className="text-gray-400">
+          <SearchIcon />
         </IconButton>
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>Option 1</MenuItem>
-          <MenuItem onClick={handleClose}>Option 2</MenuItem>
-        </Menu>
+      </div>
 
-        {/* User Profile Menu */}
-        <IconButton onClick={handleProfileMenuClick} className={styles.profileMenu}>
-          <AccountCircleIcon />
-        </IconButton>
-        <Menu anchorEl={profileMenuEl} open={Boolean(profileMenuEl)} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Settings</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
+      {/* Spacer to push user profile to the end */}
+      <div className="flex-grow"></div>
 
-        <div className={styles.menuSection}>
-          <IconButton onClick={toggleSidebar} className={styles.navButton}>
-            <MenuIcon />
-          </IconButton>
-        </div>
-        <div className={styles.controlsSection}>
-          <IconButton onClick={handleProfileClick} className={styles.navButton}>
-            <AccountCircleIcon />
-          </IconButton>
-          <Menu
-            anchorEl={profileAnchorEl}
-            open={Boolean(profileAnchorEl)}
-            onClose={handleProfileClose}
-          >
-            <MenuItem onClick={handleProfileClose}>Profile</MenuItem>
-            <MenuItem onClick={handleProfileClose}>Settings</MenuItem>
-            <MenuItem onClick={handleProfileClose}>Logout</MenuItem>
-          </Menu>
-        </div>
-      </nav>
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-    </>
+      {/* User Profile Menu */}
+      <IconButton onClick={handleProfileClick} className="text-gray-200 text-xl mr-3 cursor-pointer">
+        <AccountCircleIcon />
+      </IconButton>
+      <Menu
+        anchorEl={profileAnchorEl}
+        open={Boolean(profileAnchorEl)}
+        onClose={handleProfileClose}
+      >
+        <MenuItem onClick={handleProfileClose}>Profile</MenuItem>
+        <MenuItem onClick={handleProfileClose}>Settings</MenuItem>
+        <MenuItem onClick={handleProfileClose}>Logout</MenuItem>
+      </Menu>
+    </nav>
   );
 };
 

@@ -1,52 +1,42 @@
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px; // Adjust as needed
-    height: 100%;
-    background-color: #333; // Sidebar background color
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1000; // Ensure it is above other content
-    display: flex;
-    flex-direction: column;
-    padding: 16px; // Add padding to the sidebar
-  }
-  
-  .open {
-    transform: translateX(0);
-  }
-  
-  .closeButton {
-    align-self: flex-end; // Position the button on the top right
-    color: #fff; // Icon color
-  }
-  
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px; // Space between elements
-    margin-top: 24px; // Space below the close button
-  }
-  
-  .searchButton {
-    display: flex;
-    align-items: center;
-    color: #fff; // Icon color
-    gap: 8px; // Space between icon and text
-  }
-  
-  .searchButton span {
-    color: #fff; // Text color
-  }
-  
-  .playlist {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    color: #fff; // Text color
-  }
-  
-  .playlist li {
-    padding: 8px 0; // Space around each playlist item
-  }
+  grid-area: sidebar; /* Ensure it stays in the sidebar grid area */
+  background-color: rgb(217, 84, 12);
+  color: white;
+  height: calc(100vh - 64px); /* Adjust height to account for the navbar */
+  margin-top: 64px; /* Matches the navbar height to avoid overlap */
+  position: fixed; /* Fixed position, but stays below the navbar */
+  top: 64px; /* Place directly below the navbar */
+  left: 0;
+  width: 250px; /* Sidebar width */
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* Lower than the navbar z-index to stay below */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  overflow-y: auto; /* Allows scrolling if content is too long */
+}
+
+.open {
+  transform: translateX(0); /* Sidebar is visible */
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: #3a3a3a; /* Slightly different color for the search bar */
+  border-radius: 9999px; /* Fully rounded */
+  padding: 5px 15px;
+  margin-bottom: 20px; /* Space between the search bar and other items */
+  width: 100%; /* Full width of the sidebar */
+}
+
+.searchInput {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 5px;
+  outline: none;
+  border-radius: 9999px; /* Rounded corners for input */
+}
