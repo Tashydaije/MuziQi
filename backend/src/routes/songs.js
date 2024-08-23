@@ -93,5 +93,33 @@ router.post('/search', protect,  async (req, res) => {
       res.status(500).json({ message: 'Server error', error: err.message });
     }
   });
+
+  // get all songs
+  router.get('/', async (req, res) => {
+    try {
+      const songs = await Song.findAll();
+      res.status(200).json(songs);
+    } catch (error) {
+      console.error('Error fetching songs', error.message);
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+  });
+
+  // get song by Id
+  router.get('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const song = await Song.findById(id);
+
+      if (song) {
+        res.status(200).json(song);
+      } else {
+        res.status(404).json({ message: 'song not found' })
+      }
+    } catch (error) {
+      console.error('Error fetching song', error.message);
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+  });
   
   export default router;
