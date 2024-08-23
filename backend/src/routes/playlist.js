@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById } from '../models/playlist.js';
+import { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName } from '../models/playlist.js';
 import { protect } from '../middleware/auth.js'; // Middleware to protect routes
 import Song from '../models/song.js';
 
@@ -77,4 +77,23 @@ router.get('/', protect, async (req, res) => {
     }
   });
 
+  // update playlist name
+  router.put('/:playlistId/name', protect, async (req, res) => {
+    try {
+      const { playlistId } = req.params;
+      const { name } = req.body;
+
+      const updatedPlaylist = await updatePlaylistName(playlistId, name, req.user._id);
+      if (updatedPlaylist) {
+        res.status(200).json({ message: 'Playlist name updated successfully', playlist: updatedPlaylist });
+      } else {
+        res.status(404).json({ message: 'Playlist not found' });
+      }
+    } catch (error) {
+      console.error('Error updating playlist name', error.message);
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+  });
+
+  
   export default router;
