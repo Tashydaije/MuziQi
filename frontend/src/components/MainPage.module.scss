@@ -8,8 +8,8 @@
     'navbar navbar navbar'
     'sidebar newin newin'
     'sidebar newin newin'
-    'sidebar for-you trending'
-    'sidebar for-you trending'
+    'sidebar newin newin'
+    'sidebar newin newin'
     'song song song';
 }
 
@@ -19,14 +19,6 @@
 
 .newIn {
   grid-area: newin;
-}
-
-.for-you {
-  grid-area: for-you;
-}
-
-.trending {
-  grid-area: trending;
 }
 
 .song {

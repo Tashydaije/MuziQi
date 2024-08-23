@@ -50,7 +50,7 @@ const NewIn = () => {
           <img
             src={album.image}
             alt={album.title}
-            className="w-40 h-40 object-cover rounded-md mb-2" // Reduced size and object-cover to maintain aspect ratio
+            className="w-24 h-24 object-cover rounded-md mb-2" // Reduced size and object-cover to maintain aspect ratio
           />
           
           {/* Text at the bottom */}
