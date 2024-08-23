@@ -1,8 +1,13 @@
 import React from 'react';
-import Home from './pages/Home'; // Ensure this path is correct
+import MainPage from './components/MainPage.js';
+
 
 function App() {
-  return <Home />;
+  return (
+    <div className="App">
+      <MainPage />
+    </div>
+  );
 }
 
 export default App;
