@@ -2,25 +2,35 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: purple;
-    padding: 0 16px;
-    height: 60px;
-    width: 100%;
+    padding: 10px 20px;
+    background-color: purple; /* Navbar background color */
     position: fixed;
     top: 0;
+    width: 100%;
+    z-index: 1000;
   }
   
-  .navButton, .menuButton, .profileButton {
+  .navButton, .menuButton, .homeButton {
     color: rgb(85, 169, 230);
+    padding: 10px;
+    font-size: 1.5rem; /* Increase icon size */
+    margin: 0 10px;
+    transition: transform 0.2s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.2); /* Slightly enlarge icon on hover */
+    }
   }
   
-  .menuSection {
-    display: flex;
-    align-items: center;
+  .profileMenu {
+    color: black;
+    font-size: 1.5rem; /* Ensure consistency with other icons */
+    cursor: pointer;
+    margin-left: 10px;
   }
   
-  .controlsSection {
-    display: flex;
-    align-items: center;
+  .menuButton {
+    font-size: 2rem; /* Increase size for the three-dot menu */
   }
+  
   
