@@ -6,12 +6,19 @@
     background-color: purple; /* Navbar background color */
     position: fixed;
     top: 0;
+    z-index: 1000;
     width: 100%;
     z-index: 1000;
   }
   
   .navButton, .menuButton, .homeButton {
     color: rgb(85, 169, 230);
+    margin: 0 8px;
+  }
+  
+  .menuSection {
+    display: flex;
+    align-items: center;
     padding: 10px;
     font-size: 1.5rem; /* Increase icon size */
     margin: 0 10px;
@@ -22,6 +29,10 @@
     }
   }
   
+  .controlsSection {
+    display: flex;
+    align-items: center;
+    gap: 16px;
   .profileMenu {
     color: black;
     font-size: 1.5rem; /* Ensure consistency with other icons */
@@ -32,5 +43,6 @@
   .menuButton {
     font-size: 2rem; /* Increase size for the three-dot menu */
   }
+  
   
   

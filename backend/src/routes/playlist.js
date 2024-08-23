@@ -1,12 +1,12 @@
 import express from 'express';
-import { createPlaylist, getPlaylists, addSongToPlaylist } from '../models/playlist.js';
+import { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById } from '../models/playlist.js';
 import { protect } from '../middleware/auth.js'; // Middleware to protect routes
 import Song from '../models/song.js';
 
 const router = express.Router();
 
 // Create a new playlist
-router.post('/', protect, async (req, res) => {
+router.post('/create-playlist', protect, async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
@@ -61,4 +61,20 @@ router.get('/', protect, async (req, res) => {
     }
   });
   
+  //get one specific playlist for the logged-In user
+  router.get('/:playlistId', protect, async (req, res) => {
+    try {
+      const { playlistId } = req.params;
+
+      const playlist = await getPlaylistById(playlistId);
+      if (!playlist) {
+        return res.status(404).json({ message: 'playlist not found' });
+      }
+      res.status(200).json({ message: 'playlist retrieved successfully', playlist });
+    } catch (error) {
+      console.error('Error fetching users playlist', error.message);
+      res.status(500).json({ message: 'Internal server error', error: error.message })
+    }
+  });
+
   export default router;
