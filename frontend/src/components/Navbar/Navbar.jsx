@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IconButton, Menu, MenuItem, InputBase } from '@mui/material';
 import { ArrowBack, ArrowForward, Search as SearchIcon, Home as HomeIcon } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -32,7 +33,7 @@ const Navbar = () => {
         <IconButton onClick={handleForward} className="text-white mx-2">
           <ArrowForward />
         </IconButton>
-        <IconButton className="text-white mx-2">
+        <IconButton component={Link} to="/" className="text-white mx-2">
           <HomeIcon />
         </IconButton>
       </div>
@@ -62,8 +63,10 @@ const Navbar = () => {
         onClose={handleProfileClose}
       >
         <MenuItem onClick={handleProfileClose}>Profile</MenuItem>
+        <MenuItem onClick={handleProfileClose}><Link to="/signin">Signin</Link></MenuItem>
+        <MenuItem onClick={handleProfileClose}><Link to="/signup">Signup</Link></MenuItem>
         <MenuItem onClick={handleProfileClose}>Settings</MenuItem>
-        <MenuItem onClick={handleProfileClose}>Logout</MenuItem>
+        <MenuItem onClick={handleProfileClose}>Signout</MenuItem>
       </Menu>
     </nav>
   );
