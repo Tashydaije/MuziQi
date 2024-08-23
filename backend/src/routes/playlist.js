@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName } from '../models/playlist.js';
+import { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName, deletePlaylistById } from '../models/playlist.js';
 import { protect } from '../middleware/auth.js'; // Middleware to protect routes
 import Song from '../models/song.js';
 
@@ -95,5 +95,22 @@ router.get('/', protect, async (req, res) => {
     }
   });
 
-  
+  // delete a playlist
+  router.delete('/:playlistId/delete', protect, async (req, res) => {
+    try {
+      const { playlistId } = req.params;
+      
+      const success = await deletePlaylistById(playlistId, req.user._id);
+      if (!success) {
+        return res.status(404).json({ mesage: 'playlist not found' });
+      }
+
+
+      res.status(200).json({ message: 'playlist deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting playlist', error.message);
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+  });
+
   export default router;
