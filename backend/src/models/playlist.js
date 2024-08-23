@@ -39,4 +39,11 @@ const addSongToPlaylist = async (playlistId, song) => {
   return result.modifiedCount > 0;
 }
 
-export { createPlaylist, getPlaylists, addSongToPlaylist };
+const getPlaylistById = async (playlistId) => {
+  const db = getDb();
+  const playlistCollection = await db.collection('playlists');
+  const playlist = await playlistCollection.findOne({ _id: new ObjectId(playlistId) });
+  return playlist;
+}
+
+export { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById };
