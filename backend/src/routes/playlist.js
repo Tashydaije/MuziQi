@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName, deletePlaylistById } from '../models/playlist.js';
+import { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName, deletePlaylistById, removeSongFromPlaylist } from '../models/playlist.js';
 import { protect } from '../middleware/auth.js'; // Middleware to protect routes
 import Song from '../models/song.js';
 
@@ -61,6 +61,18 @@ router.get('/', protect, async (req, res) => {
     }
   });
   
+  // remove song from playlist
+  router.delete('/:playlistId/songs/:songId', protect, async (req, res) => {
+    const { playlistId, songId } = req.params;
+  
+    try {
+      const result = await removeSongFromPlaylist(playlistId, songId);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ message: 'Error removing song from playlist', error: error.message });
+    }
+  });
+
   //get one specific playlist for the logged-In user
   router.get('/:playlistId', protect, async (req, res) => {
     try {
