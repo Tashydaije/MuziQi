@@ -41,6 +41,10 @@ router.post('/register', async (req, res) => {
       },
     };
 
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ msg: 'JWT secret is not defined in environment variables' });
+    }
+
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
@@ -81,6 +85,10 @@ router.post('/login', async (req, res) => {
         id: user._id,
       },
     };
+
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ msg: 'JWT secret is not defined in environment variables' });
+    }
 
     jwt.sign(
       payload,
