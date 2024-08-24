@@ -9,7 +9,7 @@ const router = express.Router();
 // @desc    Register a new user
 // @access  Public
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, firstName, lastName, profilePhoto } = req.body;
 
   try {
     const db = getDb();
@@ -26,14 +26,18 @@ router.post('/register', async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      firstName,
+      lastName,
+      profilePhoto,
       createdAt: new Date(),
     };
 
-    await usersCollection.insertOne(newUser);
+    const result = await usersCollection.insertOne(newUser);
+    const createdUser = result.insertedId;
 
     const payload = {
       user: {
-        id: newUser._id,
+        id: createdUser._id,
       },
     };
 
@@ -43,7 +47,7 @@ router.post('/register', async (req, res) => {
       { expiresIn: '1h' },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.json({ token, user: createdUser });
       }
     );
   } catch (err) {
