@@ -1,5 +1,4 @@
-import bcrypt from 'bcryptjs';
-import { ObjectId, ReturnDocument } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import getDb from '../config/db.js';
 
 const createPlaylist = async (userId, name) => {
@@ -39,6 +38,27 @@ const addSongToPlaylist = async (playlistId, song) => {
   return result.modifiedCount > 0;
 }
 
+const removeSongFromPlaylist = async (playlistId, songId) => {
+  const db = getDb();
+  const playlistCollection = await db.collection('playlists');
+
+  const playlist = await getPlaylistById(playlistId);
+  if (!playlist) {
+    throw new Error('Playlist not found');
+  }
+
+  const updatedSongs = playlist.songs.filter(song => song._id.toString() !== songId.toString());
+
+  await playlistCollection.updateOne(
+    { _id: new ObjectId(playlistId) },
+    { $set: { songs: updatedSongs } }
+  );
+
+  const updatedPlaylist = await getPlaylistById(playlistId);
+
+  return { message: 'song removed from playlist successfully', updatedPlaylist: updatedPlaylist };
+}
+
 const getPlaylistById = async (playlistId) => {
   const db = getDb();
   const playlistCollection = await db.collection('playlists');
@@ -68,4 +88,4 @@ const deletePlaylistById = async (playlistId, userId) => {
   return result.deletedCount > 0;
 }
 
-export { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName, deletePlaylistById };
+export { createPlaylist, getPlaylists, addSongToPlaylist, getPlaylistById, updatePlaylistName, deletePlaylistById, removeSongFromPlaylist };
