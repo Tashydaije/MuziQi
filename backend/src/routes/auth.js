@@ -41,22 +41,26 @@ router.post('/register', async (req, res) => {
       },
     };
 
-    if (!process.env.JWT_SECRET) {
+    if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
       return res.status(500).json({ msg: 'JWT secret is not defined in environment variables' });
     }
 
-    jwt.sign(
+    const access_token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token, user: createdUser });
-      }
+      { expiresIn: '1h' }
     );
+
+    const refresh_token = jwt.sign(
+      payload,
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.status(200).json({ token: access_token, refresh_token: refresh_token, user: createdUser });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).send('Internal Server error');
   }
 });
 
@@ -86,22 +90,69 @@ router.post('/login', async (req, res) => {
       },
     };
 
-    if (!process.env.JWT_SECRET) {
+    if (!process.env.JWT_SECRET || process.env.JWT_REFRESH_SECRET) {
       return res.status(500).json({ msg: 'JWT secret is not defined in environment variables' });
     }
 
-    jwt.sign(
+    const access_token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
+      { expiresIn: '1h' }
     );
+
+    const refresh_token = jwt.sign(
+      payload,
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.status(200).json({ token: access_token, refresh_token: refresh_token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+});
+
+// Refresh tokens endpoint
+// @route   POST /api/auth/refresh-token
+// @desc    Generate a new access token using the refresh token
+// @access  Public
+router.post('/refresh-token', async (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(400).json({ msg: 'No refresh token provided' });
+  }
+
+  try {
+    // Verify the refresh token
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const db = getDb();
+    const usersCollection = db.collection('users');
+
+    // Check if the user still exists
+    const user = await usersCollection.findOne({ _id: decoded.user.id });
+    if (!user) {
+      return res.status(401).json({ msg: 'User not found' });
+    }
+
+    // Generate a new access token
+    const payload = {
+      user: {
+        id: user._id,
+      },
+    };
+
+    const access_token = jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    res.status(200).json({ access_token });
+  } catch (err) {
+    console.error(err.message);
+    res.status(403).json({ msg: 'Invalid refresh token' });
   }
 });
 
