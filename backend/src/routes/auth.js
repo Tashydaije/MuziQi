@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import getDb from '../config/db.js';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
@@ -90,7 +91,7 @@ router.post('/login', async (req, res) => {
       },
     };
 
-    if (!process.env.JWT_SECRET || process.env.JWT_REFRESH_SECRET) {
+    if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
       return res.status(500).json({ msg: 'JWT secret is not defined in environment variables' });
     }
 
@@ -130,16 +131,25 @@ router.post('/refresh-token', async (req, res) => {
     const db = getDb();
     const usersCollection = db.collection('users');
 
+    // Convert the decoded user ID to ObjectId
+    const userId = new ObjectId(decoded.user.id);
+
     // Check if the user still exists
-    const user = await usersCollection.findOne({ _id: decoded.user.id });
+    const user = await usersCollection.findOne({ _id: userId });
     if (!user) {
       return res.status(401).json({ msg: 'User not found' });
     }
 
+    console.log(user);
     // Generate a new access token
     const payload = {
       user: {
         id: user._id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePhoto: user.profilePhoto
       },
     };
 
