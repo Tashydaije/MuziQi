@@ -28,7 +28,7 @@ const SignIn = () => {
     try {
       await signInUser(credentials);
       toast.success("Welcome...");
-      navigate('/profile');
+      navigate('/');
     } catch (error) {
       toast.error(error.message);
     }

@@ -42,7 +42,8 @@ const Profile = () => {
       }
     };
 
-    fetchUserDetails(), fetchPlaylist ();
+    fetchUserDetails();
+    fetchPlaylist ();
   }, []);
 
   const handlePlaylistClick = (playlistId) => {

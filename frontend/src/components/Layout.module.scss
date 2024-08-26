@@ -3,14 +3,14 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 3fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto auto auto 1fr auto;
   grid-template-areas:
-    'navbar navbar'
-    'sidebar main'
-    'sidebar main'
-    'sidebar main'
-    'sidebar main'
-    'song song';
+    'navbar navbar navbar'
+    'sidebar main main'
+    'sidebar main main'
+    'sidebar main main'
+    'sidebar main main'
+    'song song song';
 }
 
 .navbar {
@@ -25,29 +25,11 @@
   grid-area: main;
   overflow-y: auto;
   padding: 16px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust to fit dynamically */
-  gap: 16px; /* Spacing between album containers */
 }
 
 .song {
   grid-area: song;
 }
-
-@media (max-width: 1200px) {
-  .main {
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .main {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .main {
-    grid-template-columns: 1fr; /* 1 column for very small screens */
-  }
+.song {
+grid-area: song;
 }
