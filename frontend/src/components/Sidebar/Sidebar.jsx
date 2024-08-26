@@ -21,4 +21,8 @@ const Sidebar = ({ isOpen }) => {
   );
 };
 
+Sidebar.propTypes = {
+  isOpen: PropTypes.bool.isRequired
+};
+
 export default Sidebar;

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './Signin.module.scss';
 import Navbar from '../../components/Navbar';
+import { signInUser } from '../../services/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = () => {
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,10 +22,16 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle sign-in logic here
-    console.log(credentials);
+
+    try {
+      await signInUser(credentials);
+      toast.success("Welcome...");
+      navigate('/profile');
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -27,11 +39,12 @@ const SignIn = () => {
       <Navbar />
       <form className={styles.signinForm} onSubmit={handleSubmit}>
         <h2>Sign In</h2>
+        <ToastContainer />
         <input
           type="text"
-          name="username"
-          placeholder="Username"
-          value={credentials.username}
+          name="email"
+          placeholder="Email"
+          value={credentials.email}
           onChange={handleChange}
           required
         />
@@ -44,6 +57,14 @@ const SignIn = () => {
           required
         />
         <button type="submit">Sign In</button>
+        <div className={styles.signUpLink}>
+          <p>
+             Create a new account?{' '}
+            <Link to="/signup">
+              Sign up
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );
