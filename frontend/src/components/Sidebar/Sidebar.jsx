@@ -1,21 +1,20 @@
-import React from "react";
-import styles from "./Sidebar.module.scss";
+// src/components/Sidebar/Sidebar.jsx
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styles from './Sidebar.module.scss';
 
 const Sidebar = ({ isOpen }) => {
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
       <div className={styles.searchBar}>
-        <input
-          type="text"
-          placeholder="Search"
-          className={styles.searchInput}
-        />
+        <input type="text" placeholder="Search" className={styles.searchInput} />
       </div>
       <div className={styles.content}>
         <ul className={styles.playlist}>
-          <li>Playlist 1</li>
-          <li>Playlist 2</li>
-          <li>Playlist 3</li>
+          <li>
+            <Link to="/library">Library</Link>
+          </li>
+          {/* Add other links or items here */}
         </ul>
       </div>
     </div>

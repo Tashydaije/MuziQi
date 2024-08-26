@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconButton, Menu, MenuItem, InputBase } from '@mui/material';
 import { ArrowBack, ArrowForward, Search as SearchIcon, Home as HomeIcon } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = () => {
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate(); // Use the useNavigate hook for programmatic navigation
 
   const handleProfileClick = (event) => {
     setProfileAnchorEl(event.currentTarget);
@@ -21,6 +23,12 @@ const Navbar = () => {
 
   const handleForward = () => {
     window.history.forward();
+  };
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate(`/search?query=${encodeURIComponent(query)}`);
+    }
   };
 
   return (
@@ -44,8 +52,10 @@ const Navbar = () => {
           placeholder="Type here..."
           inputProps={{ 'aria-label': 'search' }}
           className="flex-grow px-2 outline-none"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
-        <IconButton type="submit" aria-label="search" className="text-gray-400">
+        <IconButton type="button" aria-label="search" className="text-gray-400" onClick={handleSearch}>
           <SearchIcon />
         </IconButton>
       </div>
