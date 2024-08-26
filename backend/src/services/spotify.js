@@ -12,6 +12,10 @@ const authenticate = async () => {
     const data = await spotifyApi.clientCredentialsGrant();
     spotifyApi.setAccessToken(data.body['access_token']);
     console.log('Spotify access token set:', data.body['access_token']);
+
+    // Set up a timer to refresh the token 5 minutes before it expires
+    const expiresIn = data.body['expires_in'];
+    setTimeout(authenticate, (expiresIn - 300) * 1000);
   } catch (err) {
     console.error('Error getting Spotify access token:', err);
   }
