@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { IconButton, Menu, MenuItem, InputBase } from '@mui/material';
 import { ArrowBack, ArrowForward, Search as SearchIcon, Home as HomeIcon } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { logoutUser } from '../../services/auth'
 
 const Navbar = () => {
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate('/signin');
+  };
 
   const handleProfileClick = (event) => {
     setProfileAnchorEl(event.currentTarget);
@@ -62,11 +69,10 @@ const Navbar = () => {
         open={Boolean(profileAnchorEl)}
         onClose={handleProfileClose}
       >
-        <MenuItem onClick={handleProfileClose}>Profile</MenuItem>
+        <MenuItem onClick={handleProfileClose}><Link to="/profile">Profile</Link></MenuItem>
         <MenuItem onClick={handleProfileClose}><Link to="/signin">Signin</Link></MenuItem>
-        <MenuItem onClick={handleProfileClose}><Link to="/signup">Signup</Link></MenuItem>
         <MenuItem onClick={handleProfileClose}>Settings</MenuItem>
-        <MenuItem onClick={handleProfileClose}>Signout</MenuItem>
+        <MenuItem onClick={handleLogout}>Signout</MenuItem>
       </Menu>
     </nav>
   );

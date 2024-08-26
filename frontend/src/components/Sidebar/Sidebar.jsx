@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import styles from "./Sidebar.module.scss";
 
 const Sidebar = ({ isOpen }) => {
@@ -20,6 +21,10 @@ const Sidebar = ({ isOpen }) => {
       </div>
     </div>
   );
+};
+
+Sidebar.propTypes = {
+  isOpen: PropTypes.bool.isRequired
 };
 
 export default Sidebar;
