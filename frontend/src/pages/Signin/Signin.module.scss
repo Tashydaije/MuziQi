@@ -53,3 +53,20 @@
   .signinForm button:hover {
     background-color: #6b086e;
   }
+
+  .signUpLink {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  
+  .signUpLink p {
+    margin: 0;
+  }
+  
+  .signUpLink a {
+    color: rgb(152, 6, 128);
+    text-decoration: underline;
+  }
