@@ -26,8 +26,15 @@ const Library = () => {
     fetchPlaylists();
   }, []);
 
-  const handlePlaylistClick = (playlistId) => {
-    navigate(`/playlist/${playlistId}`);
+  const isValidObjectId = (id) => /^[a-fA-F0-9]{24}$/.test(id);
+
+  const handlePlaylistClick = (id) => {
+    if (isValidObjectId(id)) {
+      navigate(`/playlist/${id}`);
+    } else {
+      console.error('Invalid playlist ID format');
+      toast.error('Invalid playlist ID format');
+    }
   };
 
   const handleCreatePlaylist = async (playlistData) => {
@@ -50,7 +57,7 @@ const Library = () => {
   return (
     <Layout>
       <div className={styles.libraryContainer}>
-        <h4>My Library</h4>
+        <h1>My Library</h1>
         <ToastContainer />
         <button onClick={openModal} className={styles.addPlaylistButton}>
           <FiPlus size={24} />
