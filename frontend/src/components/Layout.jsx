@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import Song from './Song';
 import styles from './Layout.module.scss';
 
+
 const Layout = ({ children }) => {
   return (
     <div className={styles.layout}>
