@@ -1,0 +1,597 @@
+{
+	"info": {
+		"_postman_id": "07f0908d-d37a-4dc2-bedd-b8150896e944",
+		"name": "MuziQi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8087712"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "registerUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Faiza\",\r\n  \"email\": \"faiza@example.com\",\r\n  \"password\": \"password\",\r\n  \"firstName\": \"faiza\",\r\n  \"lastName\": \"Kudade\",\r\n  \"profilePhoto\": \"https://pin.it/68iWSuYNb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"tasha@example.com\",\r\n  \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/66bdb24fcf906e9976391fa7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"66bdb24fcf906e9976391fa7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjEyOCwiZXhwIjoxNzI0NjY1NzI4fQ.dt_XYsqJs12QLpBKY2hGFVY5GvPe9nN5HAvBdG2C2nw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"updateData\": {\r\n    \"username\": \"Tasha D.\",\r\n    \"firstName\": \"Tatata\"\r\n  } \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/users/66bdb24fcf906e9976391fa7/edit",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"users",
+								"66bdb24fcf906e9976391fa7",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjYjM0NjA4OGMzMzFlMmZlMjg4YWQ3In0sImlhdCI6MTcyNDY2MjMxOSwiZXhwIjoxNzI0NjY1OTE5fQ.3dNfKt9JQYJori7uC9QOe0VTupel0cIyqj7gKPEt-2w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/users/66cb346088c331e2fe288ad7/delete",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"users",
+								"66cb346088c331e2fe288ad7",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjYjM0NjA4OGMzMzFlMmZlMjg4YWQ3In0sImlhdCI6MTcyNDY2MjMxOSwiZXhwIjoxNzI0NjY1OTE5fQ.3dNfKt9JQYJori7uC9QOe0VTupel0cIyqj7gKPEt-2w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDU5NTA4MCwiZXhwIjoxNzI1MTk5ODgwfQ.tWFisy-FlqST1BRK6OuGG_ZExoykqAi3fp1cm_DKQ2I\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/auth/refresh-token",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "playlists",
+			"item": [
+				{
+					"name": "createPlaylist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjM5OSwiZXhwIjoxNzI0NjY1OTk5fQ.QhEL5TJJzkW1ved6Zql-lQp4MRQKJqrLE9u0fXxO0z8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Chill I\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/playlists/create-playlist",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"playlists",
+								"create-playlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPlaylists",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjM5OSwiZXhwIjoxNzI0NjY1OTk5fQ.QhEL5TJJzkW1ved6Zql-lQp4MRQKJqrLE9u0fXxO0z8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/playlists",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addSongToPlaylist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjM5OSwiZXhwIjoxNzI0NjY1OTk5fQ.QhEL5TJJzkW1ved6Zql-lQp4MRQKJqrLE9u0fXxO0z8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"spotifyUri\": \"spotify:track:3B54sVLJ402zGa6Xm4YGNe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/playlists/66cc42c638d78ff8fbdd9b2b/songs/66c51056fdc0e40368e953f0",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"playlists",
+								"66cc42c638d78ff8fbdd9b2b",
+								"songs",
+								"66c51056fdc0e40368e953f0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserPlaylist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjM5OSwiZXhwIjoxNzI0NjY1OTk5fQ.QhEL5TJJzkW1ved6Zql-lQp4MRQKJqrLE9u0fXxO0z8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/playlists/66c9f12b792dae20968b2345",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"playlists",
+								"66c9f12b792dae20968b2345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePlaylistName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjM5OSwiZXhwIjoxNzI0NjY1OTk5fQ.QhEL5TJJzkW1ved6Zql-lQp4MRQKJqrLE9u0fXxO0z8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ex-Tape revamped\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/playlists/66c9f12b792dae20968b2345/name",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"playlists",
+								"66c9f12b792dae20968b2345",
+								"name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePlaylist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjM5OSwiZXhwIjoxNzI0NjY1OTk5fQ.QhEL5TJJzkW1ved6Zql-lQp4MRQKJqrLE9u0fXxO0z8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/playlists/66cc429438d78ff8fbdd9b29/delete",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"playlists",
+								"66cc429438d78ff8fbdd9b29",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeSongFromPlaylist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIn0sImlhdCI6MTcyNDY2MjM5OSwiZXhwIjoxNzI0NjY1OTk5fQ.QhEL5TJJzkW1ved6Zql-lQp4MRQKJqrLE9u0fXxO0z8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/playlists/66c9f12b792dae20968b2345/songs/66c51056fdc0e40368e953f0",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"playlists",
+								"66c9f12b792dae20968b2345",
+								"songs",
+								"66c51056fdc0e40368e953f0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "songs",
+			"item": [
+				{
+					"name": "addSong",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"spotifyUri\": \"spotify:track:6hDi2m4e4l1XxDVwjIgGf9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/songs/addSong",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"songs",
+								"addSong"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchSong",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZjOWUxYTRhYzVlZTQ0YTc1ZDI4M2NlIiwidXNlcm5hbWUiOiJUYXNoYSBELiIsImVtYWlsIjoidGFzaGFAZXhhbXBsZS5jb20iLCJmaXJzdE5hbWUiOiJUYXRhdGEiLCJsYXN0TmFtZSI6IkRhaWplIiwicHJvZmlsZVBob3RvIjoiaHR0cHM6Ly9waW4uaXQvNjhpV1N1WU5iIn0sImlhdCI6MTcyNDY2MjM3NywiZXhwIjoxNzI0NjY1OTc3fQ.bBYrLExnWGYbrxv6XAnPcRGtN36YJTTrriVS0H2c2ms",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": \"Tempted me\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/songs/search",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"songs",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSongById",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/songs/66c50a98ef0888778ffd2d69",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"songs",
+								"66c50a98ef0888778ffd2d69"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllSongs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/songs/",
+							"protocol": "https",
+							"host": [
+								"backend-muziqi-53ef7f049bb5",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"songs",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

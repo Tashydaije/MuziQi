@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import getDb from '../config/db.js';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const router = express.Router();
 // @desc    Register a new user
 // @access  Public
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, firstName, lastName, profilePhoto } = req.body;
 
   try {
     const db = getDb();
@@ -26,29 +27,41 @@ router.post('/register', async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      firstName,
+      lastName,
+      profilePhoto,
       createdAt: new Date(),
     };
 
-    await usersCollection.insertOne(newUser);
+    const result = await usersCollection.insertOne(newUser);
+    const createdUser = result.insertedId;
 
     const payload = {
       user: {
-        id: newUser._id,
+        id: createdUser._id,
       },
     };
 
-    jwt.sign(
+    if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
+      return res.status(500).json({ msg: 'JWT secret is not defined in environment variables' });
+    }
+
+    const access_token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
+      { expiresIn: '1h' }
     );
+
+    const refresh_token = jwt.sign(
+      payload,
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.status(200).json({ token: access_token, refresh_token: refresh_token, user: createdUser });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).send('Internal Server error');
   }
 });
 
@@ -78,18 +91,78 @@ router.post('/login', async (req, res) => {
       },
     };
 
-    jwt.sign(
+    if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
+      return res.status(500).json({ msg: 'JWT secret is not defined in environment variables' });
+    }
+
+    const access_token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
+      { expiresIn: '1h' }
     );
+
+    const refresh_token = jwt.sign(
+      payload,
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.status(200).json({ token: access_token, refresh_token: refresh_token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+});
+
+// Refresh tokens endpoint
+// @route   POST /api/auth/refresh-token
+// @desc    Generate a new access token using the refresh token
+// @access  Public
+router.post('/refresh-token', async (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(400).json({ msg: 'No refresh token provided' });
+  }
+
+  try {
+    // Verify the refresh token
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const db = getDb();
+    const usersCollection = db.collection('users');
+
+    // Convert the decoded user ID to ObjectId
+    const userId = new ObjectId(decoded.user.id);
+
+    // Check if the user still exists
+    const user = await usersCollection.findOne({ _id: userId });
+    if (!user) {
+      return res.status(401).json({ msg: 'User not found' });
+    }
+
+    console.log(user);
+    // Generate a new access token
+    const payload = {
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePhoto: user.profilePhoto
+      },
+    };
+
+    const access_token = jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    res.status(200).json({ access_token });
+  } catch (err) {
+    console.error(err.message);
+    res.status(403).json({ msg: 'Invalid refresh token' });
   }
 });
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const NewIn = () => {
   const [songs, setSongs] = useState([]); // Initialize songs as an empty array
 
@@ -30,6 +31,18 @@ const NewIn = () => {
             key={song.spotifyUri}
             className="flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-lg"
           >
+    const getSongs = async () => {
+      const songsData = await fetchSongs();
+      setSongs(songsData);
+    };
+    getSongs();
+  }, []);
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      {songs.length > 0 ? ( // Check if songs array has items
+        songs.map((song) => (
+          <div key={song.id} className="flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-lg">
             <img
               src={song.imageUrl} // Replace with the correct property
               alt={song.title}

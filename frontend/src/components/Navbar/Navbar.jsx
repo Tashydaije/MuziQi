@@ -64,12 +64,7 @@ const Navbar = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <IconButton
-          type="button"
-          aria-label="search"
-          className="text-gray-400"
-          onClick={handleSearch}
-        >
+        <IconButton type="button" aria-label="search" className="text-gray-400" onClick={handleSearch}>
           <SearchIcon />
         </IconButton>
       </div>
