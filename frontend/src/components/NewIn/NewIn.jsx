@@ -36,6 +36,24 @@ const albums = [
     title: "OTW",
     artist: "Khalid",
     image: require('../../images/OTW.jpg'),
+  },
+  {
+    id: 7,
+    title: "LifeStyle",
+    artist: "Bien",
+    image: require('../../images/Lifestyle.jpg'),
+  },
+  {
+    id: 8,
+    title: "Not Like Us",
+    artist: "Kendrick Lamar",
+    image: require('../../images/like us.jpg'),
+  },
+  {
+    id: 9,
+    title: "RiRi",
+    artist: "Amine",
+    image: require('../../images/riri.jpg'),
   }
 
 ];
@@ -48,7 +66,7 @@ const NewIn = () => {
           <img
             src={album.image}
             alt={album.title}
-            className="w-24 h-24 object-cover rounded-md mb-2"
+            className="w-24.5 h-24.5 object-cover rounded-md mb-2"
           />
 
           {/* Text at the bottom */}
