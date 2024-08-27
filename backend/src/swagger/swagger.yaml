@@ -1,0 +1,486 @@
+openapi: 3.0.0
+info:
+  title: MuziQi API Documentation
+  version: 1.0.0
+  description: This is the API documentation for the MuziQi application
+  contact:
+    name: Natasha
+    email: mbuguanatasha01@gmail.com
+servers:
+  - url: https://backend-muziqi-53ef7f049bb5.herokuapp.com/
+    description: Production server
+  - url: http://localhost:3000
+    description: Development server
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      description: Creates a new user and returns the JWT tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                profilePhoto:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful registration
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        '400':
+          description: User already exists
+        '500':
+          description: Internal server error
+
+  /api/auth/login:
+    post:
+      summary: Login user and get token
+      description: Logs in a user and returns the JWT tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  refresh_token:
+                    type: string
+        '400':
+          description: Invalid credentials
+        '500':
+          description: Internal server error
+
+  /api/auth/refresh-token:
+    post:
+      summary: Generate a new access token using the refresh token
+      description: Refreshes the JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: New access token generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+        '400':
+          description: No refresh token provided
+        '403':
+          description: Invalid refresh token
+        '500':
+          description: Internal server error
+
+  /api/users/{id}:
+    get:
+      summary: Get user details by ID
+      description: Retrieve user details by their unique ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          description: Error fetching user
+
+  /api/users/{id}/edit:
+    put:
+      summary: Update user details
+      description: Update user details for a specified user ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                updateData:
+                  type: object
+                  description: Data to update the user with
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  update:
+                    $ref: '#/components/schemas/User'
+        '500':
+          description: Error updating user
+
+  /api/users/{id}/delete:
+    delete:
+      summary: Delete user/account
+      description: Delete a user and their associated records by user ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Error deleting user
+
+  /api/playlists/create-playlist:
+    post:
+      summary: Create a new playlist
+      description: Creates a new playlist for the logged-in user.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Playlist created successfully
+        '400':
+          description: Playlist name is required
+        '500':
+          description: Internal server error
+
+  /api/playlists:
+    get:
+      summary: Get all playlists
+      description: Retrieves all playlists for the logged-in user.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful retrieval of playlists
+        '500':
+          description: Internal server error
+
+  /api/playlists/{playlistId}/songs:
+    put:
+      summary: Add song to playlist
+      description: Adds a song to a playlist by ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: playlistId
+          schema:
+            type: string
+          required: true
+          description: Playlist ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - spotifyUri
+              properties:
+                spotifyUri:
+                  type: string
+      responses:
+        '200':
+          description: Song added to playlist successfully
+        '404':
+          description: Song not found
+        '500':
+          description: Internal server error
+
+  /api/playlists/{playlistId}/songs/{songId}:
+    delete:
+      summary: Remove song from playlist
+      description: Removes a song from a playlist.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: playlistId
+          schema:
+            type: string
+          required: true
+          description: Playlist ID
+        - in: path
+          name: songId
+          schema:
+            type: string
+          required: true
+          description: Song ID
+      responses:
+        '200':
+          description: Song removed from playlist
+        '500':
+          description: Internal server error
+
+  /api/playlists/{playlistId}:
+    get:
+      summary: Get a specific playlist
+      description: Retrieves a specific playlist by ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: playlistId
+          schema:
+            type: string
+          required: true
+          description: Playlist ID
+      responses:
+        '200':
+          description: Playlist retrieved successfully
+        '404':
+          description: Playlist not found
+        '500':
+          description: Internal server error
+
+    put:
+      summary: Update playlist name
+      description: Updates the name of a playlist.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: playlistId
+          schema:
+            type: string
+          required: true
+          description: Playlist ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Playlist name updated successfully
+        '404':
+          description: Playlist not found
+        '500':
+          description: Internal server error
+
+  /api/playlists/{playlistId}/delete:
+    delete:
+      summary: Delete playlist
+      description: Deletes a playlist by ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: playlistId
+          schema:
+            type: string
+          required: true
+          description: Playlist ID
+      responses:
+        '200':
+          description: Playlist deleted successfully
+        '404':
+          description: Playlist not found
+        '500':
+          description: Internal server error
+
+  /api/songs/addSong:
+    post:
+      summary: Add a song by Spotify URI
+      description: Adds a new song to the database using a Spotify URI.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - spotifyUri
+              properties:
+                spotifyUri:
+                  type: string
+      responses:
+        '200':
+          description: Song added successfully
+        '404':
+          description: Song not found
+        '500':
+          description: Internal server error
+
+  /api/songs/search:
+    get:
+      summary: Search for a song
+      description: Searches for a song using the Spotify API and returns a list of matching songs.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        profilePhoto:
+          type: string
+    Playlist:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        userId:
+          type: string
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+    Song:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        artist:
+          type: string
+        spotifyUri:
+          type: string
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        refresh_token:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
