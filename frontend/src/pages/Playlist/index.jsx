@@ -4,6 +4,7 @@ import Layout from '../../components/Layout';
 import styles from './Playlist.module.scss';
 import { getPlaylistDetails, deletePlaylist, updatePlaylistName } from '../../services/playlist';
 import { EditPlaylistModal } from '../../components/PlaylistModal';
+import PlaylistImg from '../../images/PlaylistImg.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import { FiMoreVertical } from 'react-icons/fi';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,25 +12,36 @@ import 'react-toastify/dist/ReactToastify.css';
 const Playlist = () => {
   const { playlistId } = useParams();
   const [playlist, setPlaylist] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const navigate = useNavigate();
 
+  const isValidObjectId = (id) => {
+    return /^[a-fA-F0-9]{24}$/.test(id);
+  };
+
+  const fetchPlaylist = async () => {
+    if (!isValidObjectId(playlistId)) {
+      console.error('Invalid playlist ID format');
+      toast.error('Invalid playlist ID format');
+      return;
+    }
+    try {
+      const playlistDetails = await getPlaylistDetails(playlistId);
+      setPlaylist(playlistDetails);
+    } catch (error) {
+      toast.error('Failed to fetch playlist details');
+      console.error('Error fetching playlist details:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchPlaylist = async () => {
-      try {
-        setLoading(true);
-        const playlistDetails = await getPlaylistDetails(playlistId);
-        setPlaylist(playlistDetails);
-      } catch (error) {
-        toast.error('Failed to fetch playlist details');
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPlaylist();
+    if (playlistId) {
+      fetchPlaylist();
+    } else {
+      console.error('No playlist ID provided');
+      toast.error('Playlist ID is missing');
+    }
   }, [playlistId]);
 
   const handleDeletePlaylist = async () => {
@@ -53,12 +65,8 @@ const Playlist = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (!playlist) {
-    return <div>Playlist not found</div>; // Handle the case where playlist is null
+    return <div>Playlist not found</div>;
   }
 
   const songs = playlist?.songs || [];
@@ -68,7 +76,7 @@ const Playlist = () => {
       <ToastContainer />
       <div className={styles.playlistContainer}>
         <div className={styles.playlistHeader}>
-        <img src={'../../images/playlist.jpeg'} alt="Playlist"/>
+        <img src={PlaylistImg} alt="Playlist"/>
           <div className={styles.playlistInfo}>
             <h1>{playlist.name}</h1>
             <div className={styles.menuWrapper}>

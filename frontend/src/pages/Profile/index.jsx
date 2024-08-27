@@ -4,6 +4,7 @@ import Layout from '../../components/Layout';
 import { UserPlaylists } from '../../services/playlist';
 import { UserDetails } from '../../services/auth'
 import styles from './Profile.module.scss';
+import ProfileImg from '../../images/ProfileImg.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,16 +17,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const token = localStorage.getItem('token');
-        
-        if (!token) throw new Error('No token found in localStorage');
-        
-        const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        const userId = decodedToken.id;
-        
-        if (!userId) throw new Error('User ID is missing from token');
-        
-        const userDetails = await UserDetails(userId);
+        const userDetails = await UserDetails();
         setUser(userDetails);
       } catch (error) {
         toast.error(`Error fetching user details: ${error.message}`);
@@ -46,8 +38,15 @@ const Profile = () => {
     fetchPlaylist ();
   }, []);
 
-  const handlePlaylistClick = (playlistId) => {
-    navigate(`/playlist/${playlistId}`);
+  const isValidObjectId = (id) => /^[a-fA-F0-9]{24}$/.test(id);
+
+  const handlePlaylistClick = (id) => {
+    if (isValidObjectId(id)) {
+      navigate(`/playlist/${id}`);
+    } else {
+      console.error('Invalid playlist ID format');
+      toast.error('Invalid playlist ID format');
+    }
   };
 
   return (
@@ -58,7 +57,7 @@ const Profile = () => {
           {user && (
             <div className={styles.profileDetails}>
               <img
-                src={user.profilePhoto || '../../images/user.png'}
+                src={user.profilePhoto || ProfileImg}
                 alt="Profile"
                 className={styles.profilePhoto}
               />
