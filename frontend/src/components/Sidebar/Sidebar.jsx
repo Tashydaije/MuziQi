@@ -27,4 +27,8 @@ Sidebar.propTypes = {
   isOpen: PropTypes.bool.isRequired
 };
 
+Sidebar.defaultProps = {
+  isOpen: false,
+};
+
 export default Sidebar;

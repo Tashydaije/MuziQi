@@ -1,50 +1,64 @@
-import React, { useState, useEffect } from 'react';
-
-// Function to fetch songs from the backend
-const fetchSongs = async () => {
-  try {
-    const response = await fetch('https://backend-muziqi-53ef7f049bb5.herokuapp.com/api/songs/');
-    const data = await response.json();
-    return data.songs || []; // Ensure it returns an empty array if 'songs' is undefined
-  } catch (error) {
-    console.error('Failed to fetch songs:', error);
-    return []; // Return an empty array on error
+import React from 'react';
+// Define an array of album objects
+const albums = [
+  {
+    id: 1,
+    title: "On My Mama",
+    artist: "Victoria Monet",
+    image: require('../../images/On My Mama.jpg'),
+  },
+  {
+    id: 2,
+    title: "Pov",
+    artist: "Ariana Grande",
+    image: require('../../images/Pov.jpg'),
+  },
+  {
+    id: 3,
+    title: "Chilombo",
+    artist: "Jhene Aiko",
+    image: require('../../images/Chilombo.jpg'),
+  },
+  {
+    id: 4,
+    title: "Love Me Jeje",
+    artist: "Tems",
+    image: require('../../images/Love Me Jeje.jpg'),
+  },
+  {
+    id: 5,
+    title: "Snooze",
+    artist: "SZA",
+    image: require('../../images/Snooze.jpg'),
+  },
+  {
+    id: 6,
+    title: "OTW",
+    artist: "Khalid",
+    image: require('../../images/OTW.jpg'),
   }
-};
 
+];
 const NewIn = () => {
-  const [songs, setSongs] = useState([]); // Initialize songs as an empty array
-
-  useEffect(() => {
-    const getSongs = async () => {
-      const songsData = await fetchSongs();
-      setSongs(songsData);
-    };
-    getSongs();
-  }, []);
-
   return (
-    <div className="grid grid-cols-2 gap-4">
-      {songs.length > 0 ? ( // Check if songs array has items
-        songs.map((song) => (
-          <div key={song.id} className="flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-lg">
-            <img
-              src={song.imageUrl} // Replace with the correct property
-              alt={song.title}
-              className="w-24 h-24 object-cover rounded-md mb-2"
-            />
-            <div className="text-center">
-              <h2 className="text-xl font-bold mb-1">{song.title}</h2>
-              <p className="text-sm text-gray-600">{song.artist}</p>
-              <p className="text-sm text-gray-400">{song.album}</p> {/* Display album name if available */}
-            </div>
+    <div className="grid grid-cols-3 gap-4"> {/* Grid layout with two columns */}
+      {albums.map(album => (
+        <div key={album.id} className="flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-lg">
+          {/* Image on top */}
+          <img
+            src={album.image}
+            alt={album.title}
+            className="w-24 h-24 object-cover rounded-md mb-2"
+          />
+
+          {/* Text at the bottom */}
+          <div className="text-center">
+            <h2 className="text-xl font-bold mb-1">{album.title}</h2>
+            <p className="text-sm text-gray-600">{album.artist}</p>
           </div>
-        ))
-      ) : (
-        <p>No songs available</p> // Fallback in case songs are empty or data hasn't loaded yet
-      )}
+        </div>
+      ))}
     </div>
   );
 };
-
 export default NewIn;
