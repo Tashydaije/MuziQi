@@ -1,27 +1,28 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux"; // Import useSelector to access Redux state
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import AudioPlayer from "./components/AudioPlayer";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import SignIn from './pages/Signin';
+import SignUp from './pages/Signup';
+import Profile from './pages/Profile';
+import Library from './pages/Library';
+import Playlist from './pages/Playlist';
+import SearchResults from './pages/SearchResults/Index'
+
 
 function App() {
-  // Access the currentSong state from Redux
-  const currentSong = useSelector((state) => state.audioPlayer.currentSong);
-
   return (
-    // I've removed the Browser Router because it has been declared in the index file
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <AudioPlayer />
-      {currentSong && (
-        <div>
-          <p>Now playing: {currentSong.name}</p>
-        </div>
-      )}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<SearchResults />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/library" element={<Library />} />
+          <Route path="/playlist/:playlistId" element={<Playlist />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

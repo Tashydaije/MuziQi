@@ -1,0 +1,66 @@
+// Navbar.module.scss
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(159, 23, 23); /* Background color */
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1001;
+}
+
+.navButton {
+  color: white; /* Color for navigation icons */
+  margin: 0 8px; /* Spacing between navigation buttons */
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 50px;
+  padding: 4px 16px;
+  margin-left: 20px; /* Space from the search bar to other elements */
+  width: 350px; /* Width of the search bar */
+}
+
+.searchInput {
+  flex-grow: 1;
+  padding: 5px;
+  outline: none;
+}
+
+.searchIcon {
+  color: gray;
+}
+
+.flexSpacer {
+  flex-grow: 1; /* Pushes the profile icon to the end */
+}
+
+.profileMenu {
+  color: rgb(235, 216, 216); /* Color of the user icon */
+  font-size: 1.5rem; /* Size of the user icon */
+  margin-right: 10px; /* Adjust spacing if needed */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 5px 15px;
+  }
+
+  .searchBar {
+    margin-left: 10px;
+    width: 250px;
+  }
+
+  .profileMenu {
+    margin-right: 10px;
+  }
+}

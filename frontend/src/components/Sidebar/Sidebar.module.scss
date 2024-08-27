@@ -1,0 +1,42 @@
+.sidebar {
+  grid-area: sidebar; /* Ensure it stays in the sidebar grid area */
+  background-color: rgb(217, 84, 12);
+  color: white;
+  height: calc(100vh - 64px); /* Adjust height to account for the navbar */
+  margin-top: 64px; /* Matches the navbar height to avoid overlap */
+  position: fixed; /* Fixed position, but stays below the navbar */
+  top: 15px; /* Place directly below the navbar */
+  left: 0;
+  // width: 250px; /* Sidebar width */
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* Lower than the navbar z-index to stay below */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  overflow-y: auto; /* Allows scrolling if content is too long */
+}
+
+.open {
+  transform: translateX(0); /* Sidebar is visible */
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: #3a3a3a; /* Slightly different color for the search bar */
+  border-radius: 9999px; /* Fully rounded */
+  padding: 5px 15px;
+  margin-bottom: 20px; /* Space between the search bar and other items */
+  width: 100%; /* Full width of the sidebar */
+}
+
+.searchInput {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 5px;
+  outline: none;
+  border-radius: 9999px; /* Rounded corners for input */
+}
