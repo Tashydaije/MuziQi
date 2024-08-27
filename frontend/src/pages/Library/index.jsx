@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import styles from './Library.module.scss';
@@ -13,24 +13,30 @@ const Library = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPlaylists = async () => {
+    const fetchPlaylists = useCallback(async () => {
       try {
         const userPlaylists = await UserPlaylists();
         setPlaylists(userPlaylists);
       } catch (error) {
       toast.error(error.message);
       }
-    };
+    }, []);
 
+  useEffect(() => {
     fetchPlaylists();
-  }, []);
+  }, [fetchPlaylists]);
 
   const isValidObjectId = (id) => /^[a-fA-F0-9]{24}$/.test(id);
 
   const handlePlaylistClick = (id) => {
     if (isValidObjectId(id)) {
-      navigate(`/playlist/${id}`);
+      const foundPlaylist = playlists.find(p => p._id === id);
+      if (foundPlaylist) {
+        navigate(`/playlist/${id}`);
+      } else {
+        toast.error('Playlist not found');
+        console.error('Playlist not found');
+      }
     } else {
       console.error('Invalid playlist ID format');
       toast.error('Invalid playlist ID format');
@@ -68,9 +74,9 @@ const Library = () => {
           <div className={styles.playlistGrid}>
             {playlists.map((playlist) => (
               <div
-                key={playlist.id}
+                key={playlist._id}
                 className={styles.playlistCard}
-                onClick={() => handlePlaylistClick(playlist.id)}
+                onClick={() => handlePlaylistClick(playlist._id)}
               >
                 <p>{playlist.name}</p>
               </div>
