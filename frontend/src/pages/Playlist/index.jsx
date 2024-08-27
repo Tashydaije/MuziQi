@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import styles from './Playlist.module.scss';
@@ -20,7 +20,7 @@ const Playlist = () => {
     return /^[a-fA-F0-9]{24}$/.test(id);
   };
 
-  const fetchPlaylist = async () => {
+  const fetchPlaylist = useCallback(async () => {
     if (!isValidObjectId(playlistId)) {
       console.error('Invalid playlist ID format');
       toast.error('Invalid playlist ID format');
@@ -33,7 +33,7 @@ const Playlist = () => {
       toast.error('Failed to fetch playlist details');
       console.error('Error fetching playlist details:', error);
     }
-  };
+  }, [playlistId]);
 
   useEffect(() => {
     if (playlistId) {
@@ -42,7 +42,7 @@ const Playlist = () => {
       console.error('No playlist ID provided');
       toast.error('Playlist ID is missing');
     }
-  }, [playlistId]);
+  }, [playlistId, fetchPlaylist]);
 
   const handleDeletePlaylist = async () => {
     try {
@@ -99,7 +99,7 @@ const Playlist = () => {
         <div className={styles.songsContainer}>
           <h2>Songs</h2>
           {songs.length === 0 ? (
-            <p>No songs in this playlist</p> // Message when there are no songs
+            <p>No songs in this playlist</p>
           ) : (
             <ul className={styles.songList}>
               {songs.map((song) => (

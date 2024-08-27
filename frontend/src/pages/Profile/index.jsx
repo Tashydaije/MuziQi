@@ -28,7 +28,6 @@ const Profile = () => {
       try {
         const userPlaylists = await UserPlaylists();
         setPlaylists(userPlaylists);
-        toast.success('Playlists fetched successfully!');
       } catch (error) {
         toast.error(error.message);
       }

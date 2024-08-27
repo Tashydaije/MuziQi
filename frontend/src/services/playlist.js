@@ -4,7 +4,6 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 export const UserPlaylists = async () => {
     await checkTokenExpiration();
-  
     const token = localStorage.getItem('token');
   
     const response = await fetch(`${API_URL}/api/playlists`, {
@@ -21,11 +20,12 @@ export const UserPlaylists = async () => {
   
   const playlists = await response.json();
   console.log('Fetched playlists:', playlists);
-
+  
   return playlists;
   };
 
   export const getPlaylistDetails = async (playlistId) => {
+    await checkTokenExpiration();
     const token = localStorage.getItem('token');
   
     if (!token) {
@@ -59,7 +59,7 @@ export const UserPlaylists = async () => {
   };
 
   export const createPlaylist = async (playlistData) => {
-
+    await checkTokenExpiration();
     const token = localStorage.getItem('token');
 
     try {
@@ -85,11 +85,14 @@ export const UserPlaylists = async () => {
   };
 
   export const updatePlaylistName = async (playlistId, newName) => {
+    await checkTokenExpiration();
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_URL}/api/playlists/${playlistId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ name: newName }),
     });
@@ -102,11 +105,14 @@ export const UserPlaylists = async () => {
   };
 
   export const deletePlaylist = async (playlistId) => {
+    await checkTokenExpiration();
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_URL}/api/playlists/${playlistId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Authorization': `Bearer ${token}`,
       },
     });
   
