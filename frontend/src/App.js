@@ -10,6 +10,7 @@ import SpotifyPage from './pages/SpotifyPage/SpotifyPage';
 import SearchResults from './pages/SearchResults/Index';
 
 
+
 function App() {
   return (
     <div className="App">
