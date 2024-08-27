@@ -5,44 +5,41 @@ import styles from './Playlist.module.scss';
 import { getPlaylistDetails, deletePlaylist, updatePlaylistName } from '../../services/playlist';
 import { EditPlaylistModal } from '../../components/PlaylistModal';
 import PlaylistImg from '../../images/PlaylistImg.jpg';
+import { Menu, MenuItem } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import { FiMoreVertical } from 'react-icons/fi';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const Playlist = () => {
   const { playlistId } = useParams();
   const [playlist, setPlaylist] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  
 
-  const isValidObjectId = (id) => {
-    return /^[a-fA-F0-9]{24}$/.test(id);
-  };
+  const isValidObjectId = (id) => /^[a-fA-F0-9]{24}$/.test(id);
 
   const fetchPlaylist = useCallback(async () => {
-    if (!isValidObjectId(playlistId)) {
-      console.error('Invalid playlist ID format');
-      toast.error('Invalid playlist ID format');
-      return;
-    }
-    try {
-      const playlistDetails = await getPlaylistDetails(playlistId);
-      setPlaylist(playlistDetails);
-    } catch (error) {
-      toast.error('Failed to fetch playlist details');
-      console.error('Error fetching playlist details:', error);
-    }
+    if (playlistId || isValidObjectId(playlistId)) {
+
+      try {
+        const playlistDetails = await getPlaylistDetails(playlistId);
+        setPlaylist(playlistDetails);
+        } catch (error) {
+          toast.error('Failed to fetch playlist details');
+          console.error('Error fetching playlist details:', error);
+        } 
+      } else {
+        toast.error('Invalid playlist ID format');
+        console.error('Invalid playlist ID format');
+      }
   }, [playlistId]);
 
   useEffect(() => {
-    if (playlistId) {
-      fetchPlaylist();
-    } else {
-      console.error('No playlist ID provided');
-      toast.error('Playlist ID is missing');
-    }
-  }, [playlistId, fetchPlaylist]);
+    fetchPlaylist();
+  }, [fetchPlaylist]);
 
   const handleDeletePlaylist = async () => {
     try {
@@ -65,9 +62,13 @@ const Playlist = () => {
     }
   };
 
-  if (!playlist) {
-    return <div>Playlist not found</div>;
-  }
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   const songs = playlist?.songs || [];
 
@@ -78,20 +79,22 @@ const Playlist = () => {
         <div className={styles.playlistHeader}>
         <img src={PlaylistImg} alt="Playlist"/>
           <div className={styles.playlistInfo}>
-            <h1>{playlist.name}</h1>
+            <h1>{playlist?.name}</h1>
             <div className={styles.menuWrapper}>
               <button 
                 className={styles.menuButton} 
-                onClick={() => setMenuOpen(!menuOpen)}
+                onClick={handleMenuClick}
               >
-                <FiMoreVertical size={24} />
+              <FiMoreVertical size={24} />
               </button>
-              {menuOpen && (
-                <div className={styles.menuDropdown}>
-                  <button onClick={() => setIsEditModalOpen(true)}>Edit Playlist</button>
-                  <button onClick={handleDeletePlaylist}>Delete Playlist</button>
-                </div>
-              )}
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={() => { handleMenuClose(); setIsEditModalOpen(true); }}>Edit Playlist</MenuItem>
+                <MenuItem onClick={() => { handleMenuClose(); handleDeletePlaylist(); }}>Delete Playlist</MenuItem>
+              </Menu>
             </div>
           </div>
         </div>
@@ -104,11 +107,17 @@ const Playlist = () => {
             <ul className={styles.songList}>
               {songs.map((song) => (
                 <li key={song.id}>
+                  <a
+                    href={song.spotifyUrl}
+                    target="_blank" // Play the song
+                    rel="noopener noreferrer"
+                    className={styles.songLink}
+                  ></a>
                   <div className={styles.songInfo}>
-                    <span className={styles.songName}>{song.name || 'Unknown Song'}</span>
+                    <span className={styles.songName}>{song.title || 'Unknown Song'}</span>
                     <span className={styles.artistName}>{song.artist || 'Unknown Artist'}</span>
                   </div>
-                  <span className={styles.songDuration}>{song.duration || 'Unknown Duration'}</span>
+                  <span className={styles.songDuration}>{'4:20'}</span>
                 </li>
               ))}
             </ul>
@@ -118,7 +127,7 @@ const Playlist = () => {
           isOpen={isEditModalOpen}
           onRequestClose={() => setIsEditModalOpen(false)}
           onSubmit={handleEditPlaylist}
-          playlistName={playlist.name}
+          playlistName={playlist?.name}
         />
       </div>
     </Layout>
