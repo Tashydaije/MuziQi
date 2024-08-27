@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Library from './pages/Library';
 import Playlist from './pages/Playlist';
 import SearchResults from './pages/SearchResults/Index';
+import SpotifyPlayer from './components/spotifyclone';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/library" element={<Library />} />
           <Route path="/playlist/:playlistId" element={<Playlist />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="/sporifyplayer" element={<SpotifyPlayer />} />
         </Routes>
       </Router>
     </div>
