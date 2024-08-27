@@ -28,7 +28,13 @@ const Sidebar = () => {
 
   const handlePlaylistClick = (id) => {
     if (isValidObjectId(id)) {
-      navigate(`/playlist/${id}`);
+      const foundPlaylist = playlists.find(p => p._id === id);
+      if (foundPlaylist) {
+        navigate(`/playlist/${id}`);
+      } else {
+        toast.error('Playlist not found');
+        console.error('Playlist not found');
+      }
     } else {
       console.error('Invalid playlist ID format');
       toast.error('Invalid playlist ID format');
@@ -51,9 +57,9 @@ const Sidebar = () => {
           <ul className={styles.playlistList}>
             {playlists.map((playlist) => (
               <li
-                key={playlist.id}
+                key={playlist._id}
                 className={styles.playlistItem}
-                onClick={() => handlePlaylistClick(playlist.id)}
+                onClick={() => handlePlaylistClick(playlist._id)}
               >
                 <p>{playlist.name}</p>
               </li>

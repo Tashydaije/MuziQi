@@ -71,18 +71,27 @@
       padding: 0;
       
       li {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 0fr 2fr 1fr;
         padding: 10px 0;
         border-bottom: 1px solid #ccc;
   
         &:last-child {
           border-bottom: none;
         }
+
+        .songLink {
+          display: grid;
+          align-items: center;
+          text-decoration: none;
+          color: inherit;
+        }
   
         .songInfo {
           display: flex;
           flex-direction: column;
+          gap: 5px;
+          cursor: pointer;
         }
   
         .songName {

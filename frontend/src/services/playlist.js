@@ -37,7 +37,7 @@ export const UserPlaylists = async () => {
     }
   
     try {
-      const response = await fetch(`${API_URL}/api/playlists/${playlistId}`, {
+      const response = await fetch(`${API_URL}/api/playlists/${encodeURIComponent(playlistId)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const UserPlaylists = async () => {
       }
   
       const data = await response.json();
-      return data;
+      return data.playlist;
     } catch (error) {
       console.error('Error fetching playlist details:', error);
       throw error;
@@ -88,7 +88,7 @@ export const UserPlaylists = async () => {
     await checkTokenExpiration();
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`${API_URL}/api/playlists/${playlistId}`, {
+    const response = await fetch(`${API_URL}/api/playlists/${encodeURIComponent(playlistId)}/name`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export const UserPlaylists = async () => {
     await checkTokenExpiration();
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`${API_URL}/api/playlists/${playlistId}`, {
+    const response = await fetch(`${API_URL}/api/playlists/${encodeURIComponent(playlistId)}/delete`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

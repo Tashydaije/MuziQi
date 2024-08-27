@@ -78,19 +78,24 @@ const Navbar = () => {
       onClose={handleProfileClose}
       >
       {isAuthenticated ? (
-        <>
-          <MenuItem onClick={handleProfileClose}>
+        [
+          <MenuItem onClick={handleProfileClose} key="profile">
             <Link to="/profile">Profile</Link>
-          </MenuItem>
-          <MenuItem onClick={handleProfileClose}>
+          </MenuItem>,
+          <MenuItem onClick={handleProfileClose} key="settings">
             <Link to="/settings">Settings</Link>
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
-        </>
+          </MenuItem>,
+          <MenuItem onClick={handleLogout} key="signout">Sign Out</MenuItem>
+        ]
       ) : (
-        <MenuItem onClick={handleProfileClose}>
-          <Link to="/signin">Sign In</Link>
-        </MenuItem>
+        [
+          <MenuItem onClick={handleProfileClose} key="signin">
+            <Link to="/signin">Sign In</Link>
+          </MenuItem>,
+          <MenuItem onClick={handleProfileClose} key="signup">
+            <Link to="/signup">Sign Up</Link>
+          </MenuItem>
+        ]
       )}
     </Menu>
     </nav>
