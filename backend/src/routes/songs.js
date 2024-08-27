@@ -54,7 +54,7 @@ router.post('/addSong', async (req, res) => {
 // Search and add song
 router.post('/search', protect,  async (req, res) => {
     try {
-      const { query } = req.body; // Expecting a search query
+      const { query } = req.body;
   
       // Fetch songs from Spotify
       const searchResults = await spotifyApi.searchTracks(query);
