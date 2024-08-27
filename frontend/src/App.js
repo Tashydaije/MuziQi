@@ -9,7 +9,6 @@ import Playlist from './pages/Playlist';
 import SearchResults from './pages/SearchResults/Index';
 
 
-
 function App() {
   return (
     <div className="App">
