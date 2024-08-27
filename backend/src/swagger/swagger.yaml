@@ -505,6 +505,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /api/get-token:
+    get:
+      summary: Retrieve the Spotify access token
+      description: Fetches the Spotify access token from the server.
+      responses:
+        '200':
+          description: Successful response with the Spotify access token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: "BQD...your-access-token"
+        '500':
+          description: No Spotify access token available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No Spotify access token available"
+
 components:
   schemas:
     User:

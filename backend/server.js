@@ -6,6 +6,7 @@ import authRoutes from './src/routes/auth.js';
 import playlistRoutes from './src/routes/playlist.js';
 import songRoutes from './src/routes/songs.js';
 import userRoutes from './src/routes/users.js';
+import spotifyRoutes from './src/routes/spotify.js';
 import YAML from "yaml"
 import fs from "fs"
 import path from "path";
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/playlists', playlistRoutes);
 app.use('/api/songs', songRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/spotify', spotifyRoutes);
 
 const PORT = process.env.PORT || 3000;
 
