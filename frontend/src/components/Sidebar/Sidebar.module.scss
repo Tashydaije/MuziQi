@@ -2,24 +2,18 @@
   grid-area: sidebar;
   background-color: rgb(102, 8, 94);
   color: white;
-  height: calc(100vh - 64px);
-  margin-top: 64px;
+  height: calc(100vh - 128px);
   position: fixed;
-  top: 64px;
+  top: 60px;
   left: 0;
-  width: 250px;
-  transition: transform 0.3s ease-in-out;
-  z-index: 1000;
+  width: 255px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
-.open {
-  transform: translateX(0);
-}
 
 .searchBar {
   display: flex;
@@ -39,4 +33,33 @@
   padding: 5px;
   outline: none;
   border-radius: 9999px;
+}
+
+.content {
+  width: 100%;
+}
+
+.playlist {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.playlistList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.playlistItem {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
 }
