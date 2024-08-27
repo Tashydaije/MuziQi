@@ -60,7 +60,7 @@ const SignUp = () => {
         <div className={styles.profilePhotoContainer}>
           <label htmlFor="profilePhoto" className={styles.photoLabel}>
             <img
-              src={profilePhotoPreview || '/path/to/default/profile-photo.png'}
+              src={profilePhotoPreview || '../../images/user.png'}
               alt="Profile Preview"
               className={styles.profilePhoto}
             />

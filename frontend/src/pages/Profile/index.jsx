@@ -58,7 +58,7 @@ const Profile = () => {
           {user && (
             <div className={styles.profileDetails}>
               <img
-                src={user.profilePhoto || '../../images/'}
+                src={user.profilePhoto || '../../images/user.png'}
                 alt="Profile"
                 className={styles.profilePhoto}
               />
