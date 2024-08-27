@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styles from './Signup.module.scss'
 import Navbar from '../../components/Navbar';
 import { registerUser } from '../../services/auth';
+import ProfileImg from '../../images/ProfileImg.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -60,7 +61,7 @@ const SignUp = () => {
         <div className={styles.profilePhotoContainer}>
           <label htmlFor="profilePhoto" className={styles.photoLabel}>
             <img
-              src={profilePhotoPreview || '../../images/user.png'}
+              src={profilePhotoPreview || ProfileImg}
               alt="Profile Preview"
               className={styles.profilePhoto}
             />

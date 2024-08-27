@@ -1,8 +1,10 @@
 .libraryContainer {
     padding: 20px;
   
-    h4 {
+    h1 {
       margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: bold;
     }
   
     .playlistGrid {
@@ -32,11 +34,11 @@
     }
   
     .addPlaylistButton {
-      background-color: #6200ea;
+      background-color: #b300a1;
       color: white;
       border: none;
-      padding: 10px;
-      border-radius: 50%;
+      padding: 10px 20px;
+      border-radius: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -44,7 +46,7 @@
       margin-bottom: 20px;
   
       &:hover {
-        background-color: #4e00b3;
+        background-color: #b300a1;
       }
     }
   }

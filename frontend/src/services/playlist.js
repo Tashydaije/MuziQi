@@ -19,23 +19,43 @@ export const UserPlaylists = async () => {
       throw new Error('Failed to fetch user playlists');
     }
   
-    return response.json();
+  const playlists = await response.json();
+  console.log('Fetched playlists:', playlists);
+
+  return playlists;
   };
 
   export const getPlaylistDetails = async (playlistId) => {
-    const response = await fetch(`${API_URL}/api/playlists/${playlistId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
+    const token = localStorage.getItem('token');
   
-    if (!response.ok) {
-      throw new Error('Failed to fetch playlist details');
+    if (!token) {
+      throw new Error('No token found. Please log in again.');
     }
   
-    return response.json();
+    if (!playlistId) {
+      throw new Error('No playlistId provided');
+    }
+  
+    try {
+      const response = await fetch(`${API_URL}/api/playlists/${playlistId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch playlist details: ${errorText}`);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching playlist details:', error);
+      throw error;
+    }
   };
 
   export const createPlaylist = async (playlistData) => {
