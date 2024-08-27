@@ -411,22 +411,43 @@ paths:
           description: Internal server error
 
   /api/songs/search:
-    post:
-      summary: Search for a song
-      description: Searches for a song using the Spotify API and returns a list of matching songs.
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: query
-          in: query
-          required: true
+  post:
+    summary: Search for a song
+    description: Searches for a song using the Spotify API and returns a list of matching songs.
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
           schema:
-            type: string
-      responses:
-        '200':
-          description: Search results
-        '500':
-          description: Internal server error
+            type: object
+            properties:
+              query:
+                type: string
+                description: The search query for finding songs.
+                example: "Fall Back"
+    responses:
+      '200':
+        description: Search results
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Song'
+      '400':
+        description: Bad request due to missing query parameter
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
+      '500':
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
 
   /api/songs:
     get:
