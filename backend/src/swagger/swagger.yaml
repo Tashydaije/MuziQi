@@ -411,7 +411,7 @@ paths:
           description: Internal server error
 
   /api/songs/search:
-    get:
+    post:
       summary: Search for a song
       description: Searches for a song using the Spotify API and returns a list of matching songs.
       parameters:
@@ -425,6 +425,61 @@ paths:
           description: Search results
         '500':
           description: Internal server error
+
+  /api/songs:
+    get:
+      summary: Retrieve all songs
+      description: This endpoint retrieves a list of all songs.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response with a list of songs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Song'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/songs/{id}:
+    get:
+      summary: Retrieve a song by ID
+      description: This endpoint retrieves a specific song by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the song to retrieve
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response with the song details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Song'
+        '404':
+          description: Song not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 components:
   schemas:
