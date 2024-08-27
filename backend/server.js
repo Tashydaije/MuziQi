@@ -17,7 +17,7 @@ dotenv.config();
 
 const filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(filename);
-const outputFile = path.join(__dirname ,"..","backend","src","swagger","swagger.yaml")
+const outputFile = path.join(__dirname ,"src","swagger","swagger.yaml")
 
 
 const file = fs.readFileSync(outputFile, "utf8")
