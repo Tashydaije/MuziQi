@@ -52,18 +52,19 @@ const Navbar = () => {
           <HomeIcon />
         </IconButton>
       </div>
-
-      <div className={styles.searchBar}>
-        <InputBase
-          placeholder="Type here..."
-          inputProps={{ 'aria-label': 'search' }}
-          className={styles.searchInput}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <IconButton type="button" aria-label="search" className={styles.searchIcon} onClick={handleSearch}>
-          <SearchIcon />
-        </IconButton>
+      <div className={styles.searchBarContainer}>
+        <div className={styles.searchBar}>
+          <InputBase
+            placeholder="Type here..."
+            inputProps={{ 'aria-label': 'search' }}
+            className={styles.searchInput}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <IconButton type="button" aria-label="search" className={styles.searchIcon} onClick={handleSearch}>
+            <SearchIcon />
+          </IconButton>
+        </div>
       </div>
 
       <div className={styles.flexSpacer}></div>

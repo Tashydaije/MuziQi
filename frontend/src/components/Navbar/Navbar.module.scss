@@ -30,6 +30,12 @@
   width: 350px; 
 }
 
+.searchBarContainer {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
 .searchInput {
   flex-grow: 1;
   background: transparent;
