@@ -1,9 +1,8 @@
-// Navbar.module.scss
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(159, 23, 23); /* Background color */
+  background-color: rgb(102, 8, 94);
   padding: 10px 20px;
   position: fixed;
   width: 100%;
@@ -11,39 +10,48 @@
   z-index: 1001;
 }
 
+.navButtonGroup {
+  display: flex;
+  align-items: center;
+}
+
 .navButton {
-  color: white; /* Color for navigation icons */
-  margin: 0 8px; /* Spacing between navigation buttons */
+  color: white;
+  margin: 0 8px;
 }
 
 .searchBar {
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: #3a3a3a;
   border-radius: 50px;
   padding: 4px 16px;
-  margin-left: 20px; /* Space from the search bar to other elements */
-  width: 350px; /* Width of the search bar */
+  margin-left: 20px;
+  width: 350px; 
 }
 
 .searchInput {
   flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: white;
   padding: 5px;
   outline: none;
+  border-radius: 9999px;
 }
 
 .searchIcon {
-  color: gray;
+  color: white;
 }
 
 .flexSpacer {
-  flex-grow: 1; /* Pushes the profile icon to the end */
+  flex-grow: 1;
 }
 
 .profileMenu {
-  color: rgb(235, 216, 216); /* Color of the user icon */
-  font-size: 1.5rem; /* Size of the user icon */
-  margin-right: 10px; /* Adjust spacing if needed */
+  color: rgb(235, 216, 216);
+  font-size: 1.5rem;
+  margin-right: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
