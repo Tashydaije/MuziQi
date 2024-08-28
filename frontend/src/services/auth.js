@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 
 const API_URL = process.env.REACT_APP_API_URL;
+const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
 
 
 export const storeTokens = ({ token, refreshToken }) => {
@@ -66,15 +74,6 @@ export const getUserIdFromToken = (token) => {
     throw new Error('User ID not found in token');
   }  
   return decodedPayload.user.id;
-};
-
-const fileToBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 };
 
 export const registerUser = async (userData) => {
@@ -147,6 +146,50 @@ export const UserDetails = async () => {
   } catch (error) {
     throw new Error(`Error fetching user details: ${error.message}`);
   }
+};
+
+export const editUser = async (userId, updateData) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(`${API_URL}/api/users/${encodeURIComponent(userId)}/edit`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ updateData }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update user details');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error updating user details:', error);
+    throw error;
+  }
+};
+
+export const deleteUser = async (userId) => {
+  const token = localStorage.getItem('token');
+
+  const response = await fetch(`${API_URL}/api/users/${encodeURIComponent(userId)}/delete`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete user');
+  }
+
+    logoutUser();
+    return response.json();
 };
 
 export const useAuth = () => {
