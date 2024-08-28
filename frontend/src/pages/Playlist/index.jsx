@@ -70,6 +70,16 @@ const Playlist = () => {
     setAnchorEl(null);
   };
 
+  const formatDuration = (durationInMs) => {
+    const totalSeconds = Math.floor(durationInMs / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    return `${minutes}:${formattedSeconds}`;
+ }
+
   const songs = playlist?.songs || [];
 
   return (
@@ -117,7 +127,7 @@ const Playlist = () => {
                     <span className={styles.songName}>{song.title || 'Unknown Song'}</span>
                     <span className={styles.artistName}>{song.artist || 'Unknown Artist'}</span>
                   </div>
-                  <span className={styles.songDuration}>{'4:20'}</span>
+                  <span className={styles.songDuration}>{formatDuration(song.duration) || '4:20'}</span>
                 </li>
               ))}
             </ul>
