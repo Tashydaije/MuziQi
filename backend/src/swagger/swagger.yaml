@@ -19,7 +19,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               required:
@@ -170,13 +170,23 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
-                updateData:
-                  type: object
-                  description: Data to update the user with
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                profilePhoto:
+                  type: string
+                  format: binary
       responses:
         '200':
           description: User updated successfully
@@ -548,6 +558,7 @@ components:
           type: string
         profilePhoto:
           type: string
+          format: binary
     Playlist:
       type: object
       properties:
