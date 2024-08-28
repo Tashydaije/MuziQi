@@ -505,7 +505,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /api/get-token:
+  /api/spotify/get-token:
     get:
       summary: Retrieve the Spotify access token
       description: Fetches the Spotify access token from the server.
