@@ -3,14 +3,16 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import getDb from '../config/db.js';
 import { ObjectId } from 'mongodb';
+import upload from '../middleware/upload.js';
 
 const router = express.Router();
 
 // @route   POST /api/auth/register
 // @desc    Register a new user
 // @access  Public
-router.post('/register', async (req, res) => {
-  const { username, email, password, firstName, lastName, profilePhoto } = req.body;
+router.post('/register', upload.single('profilePhoto'), async (req, res) => {
+  const { username, email, password, firstName, lastName } = req.body;
+  const profilePhoto = req.file ? req.file.path : '';
 
   try {
     const db = getDb();

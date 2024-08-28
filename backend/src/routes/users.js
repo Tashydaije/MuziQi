@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import User from '../models/User.js';
 import { protect } from '../middleware/auth.js';
+import upload from '../middleware/upload.js';
 
 const router = express.Router();
 
@@ -20,17 +21,18 @@ router.get('/:id', async (req, res) => {
 });
 
 // update user
-router.put('/:id/edit', protect, async (req, res) => {
-    const { id } = req.params;
-    const { updateData } = req.body;
+router.put('/:id/edit', protect, upload.single('profilePhoto'), async (req, res) => {
+  const { id } = req.params;
+  const { username, email, password, firstName, lastName } = req.body;
+  const profilePhoto = req.file ? req.file.path : '';
 
-    try {
-      const updateUser = await User.updateUser(id, updateData);
-      console.log(updateUser);
-      res.status(200).json({ message: 'User updated successfully', update: updateUser});
-    } catch (error) {
-      res.status(500).json({ message: 'Error updating user', error: error.message });
-    }
+  try {
+    const updateData = { username, email, password, firstName, lastName, profilePhoto };
+    const updateUser = await User.updateUser(id, updateData);
+    res.status(200).json({ message: 'User updated successfully', update: updateUser });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user', error: error.message });
+  }
 });
 
 // delete user/account
