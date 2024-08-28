@@ -37,9 +37,9 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const emailPattern = /^[^@]+@example\.com$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(formData.email)) {
-      toast.error("Email must be an '@example.com' email.");
+      toast.error("Please enter a valid email address.");
       return;
     }
 
