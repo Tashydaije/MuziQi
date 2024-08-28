@@ -6,6 +6,7 @@ import authRoutes from './src/routes/auth.js';
 import playlistRoutes from './src/routes/playlist.js';
 import songRoutes from './src/routes/songs.js';
 import userRoutes from './src/routes/users.js';
+import spotifyRoutes from './src/routes/spotify.js';
 import YAML from "yaml"
 import fs from "fs"
 import path from "path";
@@ -17,7 +18,7 @@ dotenv.config();
 
 const filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(filename);
-const outputFile = path.join(__dirname ,"..","backend","src","swagger","swagger.yaml")
+const outputFile = path.join(__dirname ,"src","swagger","swagger.yaml")
 
 
 const file = fs.readFileSync(outputFile, "utf8")
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/playlists', playlistRoutes);
 app.use('/api/songs', songRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/spotify', spotifyRoutes);
 
 const PORT = process.env.PORT || 3000;
 
