@@ -23,6 +23,11 @@ const outputFile = path.join(__dirname ,"src","swagger","swagger.yaml")
 
 const file = fs.readFileSync(outputFile, "utf8")
 
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
+
 const swaggerDocument = YAML.parse(file)
 
 const app = express();
@@ -41,6 +46,8 @@ app.use(express.json());
 
 // Setup Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api/auth', authRoutes);

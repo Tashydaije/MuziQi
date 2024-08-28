@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id/edit', protect, upload.single('profilePhoto'), async (req, res) => {
   const { id } = req.params;
   const { username, email, password, firstName, lastName } = req.body;
-  const profilePhoto = req.file ? req.file.path : '';
+  const profilePhoto = req.file ? `/uploads/${req.file.filename}` : '';
 
   try {
     const updateData = { username, email, password, firstName, lastName, profilePhoto };

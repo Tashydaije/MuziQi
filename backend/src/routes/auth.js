@@ -12,7 +12,10 @@ const router = express.Router();
 // @access  Public
 router.post('/register', upload.single('profilePhoto'), async (req, res) => {
   const { username, email, password, firstName, lastName } = req.body;
-  const profilePhoto = req.file ? req.file.path : '';
+  const profilePhoto = req.file ? `/uploads/${req.file.filename}` : '';
+  if (!req.file) {
+    return res.status(400).json({ msg: 'File upload failed' });
+  }
 
   try {
     const db = getDb();
