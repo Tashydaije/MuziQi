@@ -22,7 +22,7 @@ function App() {
           <Route path="/library" element={<Library />} />
           <Route path="/playlist/:playlistId" element={<Playlist />} />
           <Route path="/search" element={<SearchResults />} />
-          <Route path="/sporifyplayer" element={<SpotifyPlayer />} />
+          <Route path="/spotifyplayer" element={<SpotifyPlayer />} />
         </Routes>
       </Router>
     </div>
